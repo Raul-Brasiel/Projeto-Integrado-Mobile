@@ -1,4 +1,4 @@
-package com.example.app_02_treinos_performance.ui.theme
+package com.example.app_02_treinos_performance.core.designSystem
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
