@@ -1,6 +1,5 @@
-package com.example.app_02_treinos_performance.ui.theme
+package com.example.app_02_treinos_performance.core.designSystem
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
