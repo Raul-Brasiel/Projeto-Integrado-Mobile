@@ -19,7 +19,7 @@ import kotlinx.coroutines.SupervisorJob
 class MainActivity : ComponentActivity() {
     private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val db by lazy { AppDatabase.getInstance(applicationContext, applicationScope) }
-    private val fichaRepository by lazy { FichaRepository(db.fichaDao()) }
+    private val fichaRepository by lazy { FichaRepository(db) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

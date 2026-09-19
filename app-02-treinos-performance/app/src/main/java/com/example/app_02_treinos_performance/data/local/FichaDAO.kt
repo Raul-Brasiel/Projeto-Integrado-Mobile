@@ -31,4 +31,7 @@ interface FichaDAO {
         ORDER BY f.dataCriacao DESC
     """)
     fun listarResumo(): Flow<List<FichaResumo>>
+
+    @Query("SELECT * FROM fichas WHERE id = :fichaId")
+    suspend fun buscarPorId(fichaId: Long): Ficha?
 }

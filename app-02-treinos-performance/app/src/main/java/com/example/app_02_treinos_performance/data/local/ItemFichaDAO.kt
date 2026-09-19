@@ -30,4 +30,7 @@ interface ItemFichaDAO {
         ORDER BY it.ordem ASC
     """)
     fun listarItensDaFicha(fichaId: Long): Flow<List<ItemFichaComExercicio>>
+
+    @Query("DELETE FROM itens_ficha WHERE fichaId = :fichaId")
+    suspend fun removerItensDaFicha(fichaId: Long)
 }
