@@ -16,7 +16,14 @@ import com.example.app_02_treinos_performance.feature.listaCardio.ListaCardioScr
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.example.app_02_treinos_performance.core.designSystem.components.BarraNavegacaoInferior
+import com.example.app_02_treinos_performance.feature.novaFicha.NovaFichaScreen
+import com.example.app_02_treinos_performance.feature.novaFicha.NovaFichaViewModel
+import com.example.app_02_treinos_performance.feature.novaFicha.NovaFichaViewModelFactory
+
+private const val ROTA_NOVA_FICHA = "novaFicha"
 
 @Composable
 fun AppNavigation(fichaRepository: FichaRepository) {
@@ -30,18 +37,20 @@ fun AppNavigation(fichaRepository: FichaRepository) {
                 .firstOrNull { item -> currentDestination?.hierarchy?.any { it.route == item.rota } == true }
                 ?.rota
 
-            BarraNavegacaoInferior(
-                rotaSelecionada = rotaSelecionada,
-                onItemClick = { item ->
-                    navController.navigate(item.rota) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+            if (rotaSelecionada != null) {
+                BarraNavegacaoInferior(
+                    rotaSelecionada = rotaSelecionada,
+                    onItemClick = { item ->
+                        navController.navigate(item.rota) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
-                }
-            )
+                )
+            }
         }
     ) { innerPadding ->
         NavHost(
@@ -55,14 +64,41 @@ fun AppNavigation(fichaRepository: FichaRepository) {
                 )
                 HomeScreen(
                     viewModel = homeViewModel,
-                    onAdicionarFicha = {
-                    },
+                    onAdicionarFicha = { navController.navigate(ROTA_NOVA_FICHA) },
                     onFichaClick = { fichaId ->
+                        navController.navigate("$ROTA_NOVA_FICHA?fichaId=$fichaId")
                     }
                 )
             }
+
             composable(BarraInferiorNavigation.CARDIO.rota) {
                 ListaCardioScreen()
+            }
+
+            composable(
+                route = "$ROTA_NOVA_FICHA?fichaId={fichaId}",
+                arguments = listOf(
+                    navArgument("fichaId") {
+                        type = NavType.LongType
+                        defaultValue = -1L
+                    }
+                )
+            ) { backStackEntry ->
+                val fichaIdArg = backStackEntry.arguments?.getLong("fichaId") ?: -1L
+                val fichaIdParaEditar = fichaIdArg.takeIf { it != -1L }
+
+                val novaFichaViewModel: NovaFichaViewModel = androidx.lifecycle.viewmodel.compose.viewModel(
+                    factory = NovaFichaViewModelFactory(fichaRepository, fichaIdParaEditar)
+                )
+                NovaFichaScreen(
+                    viewModel = novaFichaViewModel,
+                    onVoltar = { navController.popBackStack() },
+                    onFichaSalva = { navController.popBackStack() },
+                    onAdicionarExercicio = {
+                    },
+                    onEditarExercicio = { _, _ ->
+                    }
+                )
             }
         }
     }
