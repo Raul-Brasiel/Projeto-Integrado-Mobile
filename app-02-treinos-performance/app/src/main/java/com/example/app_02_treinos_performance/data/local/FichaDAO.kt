@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.example.app_02_treinos_performance.data.model.Ficha
+import com.example.app_02_treinos_performance.data.model.FichaResumo
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -21,4 +22,13 @@ interface FichaDAO {
 
     @Query("SELECT * FROM fichas ORDER BY dataCriacao DESC")
     fun listarTodas(): Flow<List<Ficha>>
+
+    @Query("""
+        SELECT f.id AS id, f.nome AS nome, COUNT(it.id) AS quantidadeExercicios
+        FROM fichas f
+        LEFT JOIN itens_ficha it ON it.fichaId = f.id
+        GROUP BY f.id
+        ORDER BY f.dataCriacao DESC
+    """)
+    fun listarResumo(): Flow<List<FichaResumo>>
 }
