@@ -11,26 +11,23 @@ import androidx.room.Room
 import com.example.app_02_treinos_performance.core.navigation.AppNavigation
 import com.example.app_02_treinos_performance.data.AppDatabase
 import kotlin.getValue
+import com.example.app_02_treinos_performance.data.repository.FichaRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 
 class MainActivity : ComponentActivity() {
-    private val db by lazy {
-        Room.databaseBuilder(applicationContext, AppDatabase::class.java, "treinos_db").build()
-    }
+    private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val db by lazy { AppDatabase.getInstance(applicationContext, applicationScope) }
+    private val fichaRepository by lazy { FichaRepository(db.fichaDao()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             App02treinosperformanceTheme {
-                AppNavigation()
+                AppNavigation(fichaRepository = fichaRepository)
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    App02treinosperformanceTheme {
     }
 }
