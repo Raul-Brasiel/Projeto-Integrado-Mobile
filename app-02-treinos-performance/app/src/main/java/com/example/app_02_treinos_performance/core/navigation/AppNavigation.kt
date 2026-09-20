@@ -19,11 +19,15 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.app_02_treinos_performance.core.designSystem.components.BarraNavegacaoInferior
+import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaScreen
+import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaViewModel
+import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaViewModelFactory
 import com.example.app_02_treinos_performance.feature.novaFicha.NovaFichaScreen
 import com.example.app_02_treinos_performance.feature.novaFicha.NovaFichaViewModel
 import com.example.app_02_treinos_performance.feature.novaFicha.NovaFichaViewModelFactory
 
 private const val ROTA_NOVA_FICHA = "novaFicha"
+private const val ROTA_DETALHES_FICHA = "detalhesFicha"
 
 @Composable
 fun AppNavigation(fichaRepository: FichaRepository) {
@@ -66,13 +70,31 @@ fun AppNavigation(fichaRepository: FichaRepository) {
                     viewModel = homeViewModel,
                     onAdicionarFicha = { navController.navigate(ROTA_NOVA_FICHA) },
                     onFichaClick = { fichaId ->
-                        navController.navigate("$ROTA_NOVA_FICHA?fichaId=$fichaId")
+                        navController.navigate("$ROTA_DETALHES_FICHA/$fichaId")
                     }
                 )
             }
 
             composable(BarraInferiorNavigation.CARDIO.rota) {
                 ListaCardioScreen()
+            }
+
+            composable(
+                route = "$ROTA_DETALHES_FICHA/{fichaId}",
+                arguments = listOf(navArgument("fichaId") { type = NavType.LongType })
+            ) { backStackEntry ->
+                val fichaId = backStackEntry.arguments?.getLong("fichaId") ?: return@composable
+
+                val detalhesFichaViewModel: DetalhesFichaViewModel = androidx.lifecycle.viewmodel.compose.viewModel(
+                    factory = DetalhesFichaViewModelFactory(fichaRepository, fichaId)
+                )
+                DetalhesFichaScreen(
+                    viewModel = detalhesFichaViewModel,
+                    onVoltar = { navController.popBackStack() },
+                    onEditarFicha = { id ->
+                        navController.navigate("$ROTA_NOVA_FICHA?fichaId=$id")
+                    }
+                )
             }
 
             composable(
