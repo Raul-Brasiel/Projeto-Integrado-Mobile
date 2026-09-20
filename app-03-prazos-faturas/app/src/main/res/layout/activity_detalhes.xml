@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        app:title="@string/title_detalhes"
+        app:titleTextColor="@color/header_text"
+        app:navigationIcon="@drawable/ic_back"
+        app:navigationIconTint="@color/header_text"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="16dp"
+            android:background="@drawable/bg_card">
+
+            <TextView android:id="@+id/textStatus"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:background="@drawable/bg_badge_late" android:paddingStart="10dp"
+                android:paddingEnd="10dp" android:paddingTop="3dp" android:paddingBottom="3dp"
+                android:textSize="10sp" android:textStyle="bold" android:textColor="@color/late_text"
+                tools:text="atrasado"/>
+
+            <TextView android:id="@+id/textDescricao"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="15sp" android:textStyle="bold" android:textColor="@color/text_primary"
+                android:layout_marginTop="10dp" tools:text="Fatura energia"/>
+
+            <TextView android:id="@+id/textValor"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="24sp" android:textStyle="bold" android:textColor="@color/text_primary"
+                android:layout_marginTop="4dp" tools:text="R$ 210,00"/>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/border" android:layout_marginVertical="12dp"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:layout_marginBottom="8dp">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="@string/label_favorecido"
+                    android:textSize="12sp" android:textColor="@color/text_secondary"/>
+                <TextView android:id="@+id/textFavorecido" android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:layout_weight="1"
+                    android:gravity="end" android:textSize="12sp" android:textColor="@color/text_primary"
+                    tools:text="Companhia elétrica"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:layout_marginBottom="8dp">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="@string/label_vencimento"
+                    android:textSize="12sp" android:textColor="@color/text_secondary"/>
+                <TextView android:id="@+id/textVencimento" android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:layout_weight="1"
+                    android:gravity="end" android:textSize="12sp" android:textColor="@color/text_primary"
+                    tools:text="06/09/2026 · 14:30"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="@string/label_tipo"
+                    android:textSize="12sp" android:textColor="@color/text_secondary"/>
+                <TextView android:id="@+id/textTipo" android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:layout_weight="1"
+                    android:gravity="end" android:textSize="12sp" android:textColor="@color/text_primary"
+                    tools:text="A pagar"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView android:id="@+id/btnMarcarPaga"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="@string/btn_marcar_paga" android:gravity="center"
+            android:background="@color/paid_green" android:textColor="@color/paid_bg"
+            android:textStyle="bold" android:padding="14dp" android:layout_marginTop="16dp"
+            android:clickable="true" android:focusable="true"/>
+
+        <TextView android:id="@+id/btnConfigurarNotificacao"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="@string/btn_configurar_notificacao" android:gravity="center"
+            android:background="@drawable/bg_toggle_unselected" android:textColor="@color/primary"
+            android:textStyle="bold" android:padding="14dp" android:layout_marginTop="10dp"
+            android:clickable="true" android:focusable="true"/>
+
+    </LinearLayout>
+
+</LinearLayout>

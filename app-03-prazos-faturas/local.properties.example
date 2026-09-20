@@ -1,0 +1,2 @@
+# Renomeie este arquivo para "local.properties" e ajuste o caminho do seu SDK
+sdk.dir=/caminho/para/seu/Android/Sdk
