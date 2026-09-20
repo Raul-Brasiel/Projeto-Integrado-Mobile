@@ -15,22 +15,35 @@ import com.example.app_02_treinos_performance.feature.home.HomeViewModelFactory
 import com.example.app_02_treinos_performance.feature.listaCardio.ListaCardioScreen
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.app_02_treinos_performance.core.designSystem.components.BarraNavegacaoInferior
+import com.example.app_02_treinos_performance.data.repository.ExercicioRepository
+import com.example.app_02_treinos_performance.data.repository.ItemFichaRepository
+import com.example.app_02_treinos_performance.data.repository.SerieRepository
 import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaScreen
 import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaViewModel
 import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaViewModelFactory
 import com.example.app_02_treinos_performance.feature.novaFicha.NovaFichaScreen
 import com.example.app_02_treinos_performance.feature.novaFicha.NovaFichaViewModel
 import com.example.app_02_treinos_performance.feature.novaFicha.NovaFichaViewModelFactory
+import com.example.app_02_treinos_performance.feature.registrarCarga.RegistrarCargaScreen
+import com.example.app_02_treinos_performance.feature.registrarCarga.RegistrarCargaViewModel
+import com.example.app_02_treinos_performance.feature.registrarCarga.RegistrarCargaViewModelFactory
 
 private const val ROTA_NOVA_FICHA = "novaFicha"
 private const val ROTA_DETALHES_FICHA = "detalhesFicha"
+private const val ROTA_REGISTRAR_CARGA = "registrarCarga"
 
 @Composable
-fun AppNavigation(fichaRepository: FichaRepository) {
+fun AppNavigation(
+    fichaRepository: FichaRepository,
+    itemFichaRepository: ItemFichaRepository,
+    exercicioRepository: ExercicioRepository,
+    serieRepository: SerieRepository
+) {
     val navController = rememberNavController()
 
     Scaffold(
@@ -63,7 +76,7 @@ fun AppNavigation(fichaRepository: FichaRepository) {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(BarraInferiorNavigation.FICHAS.rota) {
-                val homeViewModel: HomeViewModel = androidx.lifecycle.viewmodel.compose.viewModel(
+                val homeViewModel: HomeViewModel = viewModel(
                     factory = HomeViewModelFactory(fichaRepository)
                 )
                 HomeScreen(
@@ -85,7 +98,7 @@ fun AppNavigation(fichaRepository: FichaRepository) {
             ) { backStackEntry ->
                 val fichaId = backStackEntry.arguments?.getLong("fichaId") ?: return@composable
 
-                val detalhesFichaViewModel: DetalhesFichaViewModel = androidx.lifecycle.viewmodel.compose.viewModel(
+                val detalhesFichaViewModel: DetalhesFichaViewModel = viewModel(
                     factory = DetalhesFichaViewModelFactory(fichaRepository, fichaId)
                 )
                 DetalhesFichaScreen(
@@ -109,7 +122,7 @@ fun AppNavigation(fichaRepository: FichaRepository) {
                 val fichaIdArg = backStackEntry.arguments?.getLong("fichaId") ?: -1L
                 val fichaIdParaEditar = fichaIdArg.takeIf { it != -1L }
 
-                val novaFichaViewModel: NovaFichaViewModel = androidx.lifecycle.viewmodel.compose.viewModel(
+                val novaFichaViewModel: NovaFichaViewModel = viewModel(
                     factory = NovaFichaViewModelFactory(fichaRepository, fichaIdParaEditar)
                 )
                 NovaFichaScreen(
@@ -118,8 +131,28 @@ fun AppNavigation(fichaRepository: FichaRepository) {
                     onFichaSalva = { navController.popBackStack() },
                     onAdicionarExercicio = {
                     },
-                    onEditarExercicio = { _, _ ->
+                    onEditarExercicio = { _, item ->
+                        item.itemFichaId?.let { itemFichaId ->
+                            navController.navigate("$ROTA_REGISTRAR_CARGA/$itemFichaId")
+                        }
                     }
+                )
+            }
+            composable(
+                route = "$ROTA_REGISTRAR_CARGA/{itemFichaId}",
+                arguments = listOf(navArgument("itemFichaId") { type = NavType.LongType })
+            ) { backStackEntry ->
+                val itemFichaId = backStackEntry.arguments?.getLong("itemFichaId") ?: return@composable
+
+                val registrarCargaViewModel: RegistrarCargaViewModel = viewModel(
+                        factory = RegistrarCargaViewModelFactory(
+                            serieRepository, itemFichaRepository, exercicioRepository, itemFichaId
+                        )
+                    )
+                RegistrarCargaScreen(
+                    viewModel = registrarCargaViewModel,
+                    onVoltar = { navController.popBackStack() },
+                    onSalvo = { navController.popBackStack() }
                 )
             }
         }

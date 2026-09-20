@@ -21,11 +21,30 @@ interface ItemFichaDAO {
     suspend fun removerItem(item: ItemFicha)
 
     @Query("""
-        SELECT it.id AS id, it.fichaId AS fichaId, it.series AS series, it.repeticoes AS repeticoes,
-               it.cargaKg AS cargaKg, it.ordem AS ordem,
-               ex.id AS exercicioId, ex.nome AS nomeExercicio, ex.grupoMuscular AS grupoMuscular
+        SELECT 
+            it.id AS id,
+            it.fichaId AS fichaId,
+            it.ordem AS ordem,
+            ex.id AS exercicioId,
+            ex.nome AS nomeExercicio,
+            ex.grupoMuscular AS grupoMuscular,
+            COALESCE(contagem.totalSeries, it.series) AS series,
+            COALESCE(ultima.repeticoes, it.repeticoes) AS repeticoes,
+            COALESCE(ultima.pesoKg, it.cargaKg) AS cargaKg
         FROM itens_ficha it
         INNER JOIN exercicios ex ON ex.id = it.exercicioId
+        LEFT JOIN (
+            SELECT itemFichaId, COUNT(*) AS totalSeries
+            FROM series
+            GROUP BY itemFichaId
+        ) contagem ON contagem.itemFichaId = it.id
+        LEFT JOIN (
+            SELECT s1.itemFichaId, s1.repeticoes, s1.pesoKg
+            FROM series s1
+            WHERE s1.numero = (
+                SELECT MAX(s2.numero) FROM series s2 WHERE s2.itemFichaId = s1.itemFichaId
+            )
+        ) ultima ON ultima.itemFichaId = it.id
         WHERE it.fichaId = :fichaId
         ORDER BY it.ordem ASC
     """)
@@ -33,4 +52,7 @@ interface ItemFichaDAO {
 
     @Query("DELETE FROM itens_ficha WHERE fichaId = :fichaId")
     suspend fun removerItensDaFicha(fichaId: Long)
+
+    @Query("SELECT * FROM itens_ficha WHERE id = :itemFichaId")
+    suspend fun buscarPorId(itemFichaId: Long): ItemFicha?
 }

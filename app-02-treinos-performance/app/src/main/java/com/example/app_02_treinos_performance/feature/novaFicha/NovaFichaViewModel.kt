@@ -25,6 +25,7 @@ class NovaFichaViewModel(
                 val ficha = fichaRepository.buscarFichaPorId(fichaId)
                 val itens = fichaRepository.listarItensDaFicha(fichaId).first().map { item ->
                     ItemFichaRascunho(
+                        itemFichaId = item.id,
                         exercicioId = item.exercicioId,
                         nomeExercicio = item.nomeExercicio,
                         series = item.series,
