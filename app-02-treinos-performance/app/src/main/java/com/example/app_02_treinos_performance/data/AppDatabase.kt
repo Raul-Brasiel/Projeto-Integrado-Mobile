@@ -8,6 +8,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.app_02_treinos_performance.data.local.ExercicioDAO
 import com.example.app_02_treinos_performance.data.local.FichaDAO
 import com.example.app_02_treinos_performance.data.local.ItemFichaDAO
+import com.example.app_02_treinos_performance.data.model.Serie
+import com.example.app_02_treinos_performance.data.local.SerieDAO
 import com.example.app_02_treinos_performance.data.model.Exercicio
 import com.example.app_02_treinos_performance.data.model.Ficha
 import com.example.app_02_treinos_performance.data.model.ItemFicha
@@ -15,14 +17,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Database(
-    entities = [Ficha::class, Exercicio::class, ItemFicha::class],
-    version = 1,
+    entities = [Ficha::class, Exercicio::class, ItemFicha::class, Serie::class],
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun fichaDao(): FichaDAO
     abstract fun exercicioDao(): ExercicioDAO
     abstract fun itemFichaDao(): ItemFichaDAO
+    abstract fun serieDao(): SerieDAO
 
     companion object {
         @Volatile
@@ -31,6 +34,7 @@ abstract class AppDatabase : RoomDatabase() {
         fun getInstance(context: Context, scope: CoroutineScope): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 Room.databaseBuilder(context, AppDatabase::class.java, "treinos_db")
+                    .fallbackToDestructiveMigration(dropAllTables = true)
                     .addCallback(object : Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
@@ -46,7 +50,7 @@ abstract class AppDatabase : RoomDatabase() {
     }
 }
 
-private suspend fun popularBancoComDadosDeTeste(database: AppDatabase) {
+private suspend fun popularBancoComDadosDeTeste(database: AppDatabase){
     val exercicioDao = database.exercicioDao()
     val fichaDao = database.fichaDao()
     val itemFichaDao = database.itemFichaDao()
