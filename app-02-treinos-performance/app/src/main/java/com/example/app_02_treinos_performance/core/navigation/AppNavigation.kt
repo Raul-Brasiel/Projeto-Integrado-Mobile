@@ -23,12 +23,15 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.app_02_treinos_performance.core.designSystem.components.BarraNavegacaoInferior
 import com.example.app_02_treinos_performance.data.model.ItemFichaRascunho
+import com.example.app_02_treinos_performance.data.repository.CardioRepository
 import com.example.app_02_treinos_performance.data.repository.ExercicioRepository
 import com.example.app_02_treinos_performance.data.repository.ItemFichaRepository
 import com.example.app_02_treinos_performance.data.repository.SerieRepository
 import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaScreen
 import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaViewModel
 import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaViewModelFactory
+import com.example.app_02_treinos_performance.feature.listaCardio.ListaCardioViewModel
+import com.example.app_02_treinos_performance.feature.listaCardio.ListaCardioViewModelFactory
 import com.example.app_02_treinos_performance.feature.novaFicha.NovaFichaScreen
 import com.example.app_02_treinos_performance.feature.novaFicha.NovaFichaViewModel
 import com.example.app_02_treinos_performance.feature.novaFicha.NovaFichaViewModelFactory
@@ -46,7 +49,8 @@ fun AppNavigation(
     fichaRepository: FichaRepository,
     itemFichaRepository: ItemFichaRepository,
     exercicioRepository: ExercicioRepository,
-    serieRepository: SerieRepository
+    serieRepository: SerieRepository,
+    cardioRepository: CardioRepository
 ) {
     val navController = rememberNavController()
 
@@ -93,7 +97,18 @@ fun AppNavigation(
             }
 
             composable(BarraInferiorNavigation.CARDIO.rota) {
-                ListaCardioScreen()
+                val listaCardioViewModel: ListaCardioViewModel =
+                    viewModel(
+                        factory = ListaCardioViewModelFactory(cardioRepository)
+                    )
+
+                ListaCardioScreen(
+                    viewModel = listaCardioViewModel,
+                    onAdicionarCardio = {
+                    },
+                    onEditarCardio = { cardioId ->
+                    }
+                )
             }
 
             composable(
