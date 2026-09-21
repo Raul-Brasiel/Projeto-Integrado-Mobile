@@ -1,5 +1,7 @@
 package com.example.app_02_treinos_performance.data.model
 
+import java.io.Serializable
+
 data class ItemFichaRascunho(
     val itemFichaId: Long? = null,
     val exercicioId: Long,
@@ -7,4 +9,4 @@ data class ItemFichaRascunho(
     val series: Int,
     val repeticoes: Int,
     val cargaKg: Float
-)
+) : Serializable
