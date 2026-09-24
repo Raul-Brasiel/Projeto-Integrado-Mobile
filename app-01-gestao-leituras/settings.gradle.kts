@@ -8,12 +8,10 @@ pluginManagement {
             }
         }
         mavenCentral()
-        gradlePluginPortal()
+        gradlePluginPortal() // Essencial para buscar os plugins do Gradle
     }
 }
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
-}
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -22,5 +20,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "app-01-gestao-leituras"
+rootProject.name = "app_01_gestao-leituras"
 include(":app")
