@@ -12,6 +12,7 @@ import com.example.app_02_treinos_performance.data.repository.FichaRepository
 import com.example.app_02_treinos_performance.data.repository.ItemFichaRepository
 import com.example.app_02_treinos_performance.data.repository.ExercicioRepository
 import com.example.app_02_treinos_performance.data.repository.SerieRepository
+import com.example.app_02_treinos_performance.data.repository.CardioRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -23,6 +24,7 @@ class MainActivity : ComponentActivity() {
     private val itemFichaRepository by lazy { ItemFichaRepository(db.itemFichaDao()) }
     private val exercicioRepository by lazy { ExercicioRepository(db.exercicioDao()) }
     private val serieRepository by lazy { SerieRepository(db.serieDao()) }
+    private val cardioRepository by lazy { CardioRepository(db.cardioDao()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +35,8 @@ class MainActivity : ComponentActivity() {
                     fichaRepository = fichaRepository,
                     itemFichaRepository = itemFichaRepository,
                     exercicioRepository = exercicioRepository,
-                    serieRepository = serieRepository
+                    serieRepository = serieRepository,
+                    cardioRepository = cardioRepository
                 )
             }
         }

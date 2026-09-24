@@ -3,6 +3,7 @@ package com.example.app_02_treinos_performance.core.navigation
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,17 +16,22 @@ import com.example.app_02_treinos_performance.feature.home.HomeViewModelFactory
 import com.example.app_02_treinos_performance.feature.listaCardio.ListaCardioScreen
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.app_02_treinos_performance.core.designSystem.components.BarraNavegacaoInferior
+import com.example.app_02_treinos_performance.data.model.ItemFichaRascunho
+import com.example.app_02_treinos_performance.data.repository.CardioRepository
 import com.example.app_02_treinos_performance.data.repository.ExercicioRepository
 import com.example.app_02_treinos_performance.data.repository.ItemFichaRepository
 import com.example.app_02_treinos_performance.data.repository.SerieRepository
 import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaScreen
 import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaViewModel
 import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaViewModelFactory
+import com.example.app_02_treinos_performance.feature.listaCardio.ListaCardioViewModel
+import com.example.app_02_treinos_performance.feature.listaCardio.ListaCardioViewModelFactory
 import com.example.app_02_treinos_performance.feature.novaFicha.NovaFichaScreen
 import com.example.app_02_treinos_performance.feature.novaFicha.NovaFichaViewModel
 import com.example.app_02_treinos_performance.feature.novaFicha.NovaFichaViewModelFactory
@@ -36,13 +42,15 @@ import com.example.app_02_treinos_performance.feature.registrarCarga.RegistrarCa
 private const val ROTA_NOVA_FICHA = "novaFicha"
 private const val ROTA_DETALHES_FICHA = "detalhesFicha"
 private const val ROTA_REGISTRAR_CARGA = "registrarCarga"
+private const val ROTA_ADICIONAR_EXERCICIO = "adicionarExercicio"
 
 @Composable
 fun AppNavigation(
     fichaRepository: FichaRepository,
     itemFichaRepository: ItemFichaRepository,
     exercicioRepository: ExercicioRepository,
-    serieRepository: SerieRepository
+    serieRepository: SerieRepository,
+    cardioRepository: CardioRepository
 ) {
     val navController = rememberNavController()
 
@@ -89,7 +97,58 @@ fun AppNavigation(
             }
 
             composable(BarraInferiorNavigation.CARDIO.rota) {
-                ListaCardioScreen()
+                val listaCardioViewModel: ListaCardioViewModel =
+                    viewModel(
+                        factory = ListaCardioViewModelFactory(cardioRepository)
+                    )
+
+                ListaCardioScreen(
+                    viewModel = listaCardioViewModel,
+                    onAdicionarCardio = {
+                    },
+                    onEditarCardio = { cardioId ->
+                    }
+                )
+            }
+
+            composable(
+                route = "$ROTA_NOVA_FICHA?fichaId={fichaId}",
+                arguments = listOf(
+                    navArgument("fichaId") {
+                        type = NavType.LongType
+                        defaultValue = -1L
+                    }
+                )
+            ) { backStackEntry ->
+                val fichaIdArg = backStackEntry.arguments?.getLong("fichaId") ?: -1L
+                val fichaIdParaEditar = fichaIdArg.takeIf { it != -1L }
+
+                val novaFichaViewModel: NovaFichaViewModel = viewModel(
+                    factory = NovaFichaViewModelFactory(fichaRepository, fichaIdParaEditar)
+                )
+
+                val itensAdicionados by backStackEntry.savedStateHandle
+                    .getStateFlow<ArrayList<ItemFichaRascunho>?>("itensAdicionados", null)
+                    .collectAsStateWithLifecycle()
+
+                LaunchedEffect(itensAdicionados) {
+                    itensAdicionados?.let { lista ->
+                        lista.forEach { novaFichaViewModel.adicionarItem(it) }
+                        backStackEntry.savedStateHandle["itensAdicionados"] = null
+                    }
+                }
+
+                NovaFichaScreen(
+                    viewModel = novaFichaViewModel,
+                    onVoltar = { navController.popBackStack() },
+                    onFichaSalva = { navController.popBackStack() },
+                    onAdicionarExercicio = { navController.navigate(ROTA_ADICIONAR_EXERCICIO) },
+                    onEditarExercicio = { _, item ->
+                        item.itemFichaId?.let { itemFichaId ->
+                            navController.navigate("$ROTA_REGISTRAR_CARGA/$itemFichaId")
+                        }
+                    }
+                )
             }
 
             composable(
@@ -111,34 +170,6 @@ fun AppNavigation(
             }
 
             composable(
-                route = "$ROTA_NOVA_FICHA?fichaId={fichaId}",
-                arguments = listOf(
-                    navArgument("fichaId") {
-                        type = NavType.LongType
-                        defaultValue = -1L
-                    }
-                )
-            ) { backStackEntry ->
-                val fichaIdArg = backStackEntry.arguments?.getLong("fichaId") ?: -1L
-                val fichaIdParaEditar = fichaIdArg.takeIf { it != -1L }
-
-                val novaFichaViewModel: NovaFichaViewModel = viewModel(
-                    factory = NovaFichaViewModelFactory(fichaRepository, fichaIdParaEditar)
-                )
-                NovaFichaScreen(
-                    viewModel = novaFichaViewModel,
-                    onVoltar = { navController.popBackStack() },
-                    onFichaSalva = { navController.popBackStack() },
-                    onAdicionarExercicio = {
-                    },
-                    onEditarExercicio = { _, item ->
-                        item.itemFichaId?.let { itemFichaId ->
-                            navController.navigate("$ROTA_REGISTRAR_CARGA/$itemFichaId")
-                        }
-                    }
-                )
-            }
-            composable(
                 route = "$ROTA_REGISTRAR_CARGA/{itemFichaId}",
                 arguments = listOf(navArgument("itemFichaId") { type = NavType.LongType })
             ) { backStackEntry ->
@@ -153,6 +184,24 @@ fun AppNavigation(
                     viewModel = registrarCargaViewModel,
                     onVoltar = { navController.popBackStack() },
                     onSalvo = { navController.popBackStack() }
+                )
+            }
+
+            composable(ROTA_ADICIONAR_EXERCICIO) {
+                val viewModel: com.example.app_02_treinos_performance.feature.adicionarExercicios.AdicionarExercicioViewModel =
+                    androidx.lifecycle.viewmodel.compose.viewModel(
+                        factory = com.example.app_02_treinos_performance.feature.adicionarExercicios.AdicionarExercicioViewModelFactory(exercicioRepository)
+                    )
+
+                com.example.app_02_treinos_performance.feature.adicionarExercicios.AdicionarExercicioScreen(
+                    viewModel = viewModel,
+                    onVoltar = { itensAdicionados ->
+                        navController.previousBackStackEntry?.savedStateHandle?.set(
+                            "itensAdicionados",
+                            ArrayList(itensAdicionados)
+                        )
+                        navController.popBackStack()
+                    }
                 )
             }
         }
