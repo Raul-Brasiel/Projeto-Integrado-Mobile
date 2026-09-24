@@ -25,3 +25,53 @@ Os dados ficam em memória (`ObligationRepository`), reiniciando ao fechar o app
 ## Notificações
 
 Ao ativar uma notificação, o app agenda um alarme real via `AlarmManager` (igual ao pedido original no card do Trello) que dispara uma notificação do sistema no horário calculado. Em Android 12+ pode ser necessário liberar a permissão de "alarmes exatos" nas configurações do sistema para o `AlarmManager.setExactAndAllowWhileIdle` funcionar.
+
+
+## Arquitetura MVVM
+
+O projeto foi reorganizado em camadas:
+
+```text
+com.paulo.obrigacoes
+├── data
+│   ├── model
+│   │   └── Obligation.kt
+│   └── repository
+│       └── ObligationRepository.kt
+├── notification
+│   ├── NotificationReceiver.kt
+│   └── NotificationScheduler.kt
+└── ui
+    ├── adapter
+    │   ├── ObligationAdapter.kt
+    │   └── NotificationAdapter.kt
+    ├── main
+    │   ├── MainActivity.kt
+    │   └── MainViewModel.kt
+    ├── cadastro
+    │   ├── CadastroActivity.kt
+    │   └── CadastroViewModel.kt
+    ├── datetime
+    │   ├── DateTimeActivity.kt
+    │   └── DateTimeViewModel.kt
+    ├── detalhes
+    │   ├── DetalhesActivity.kt
+    │   └── DetalhesViewModel.kt
+    ├── notificacao
+    │   ├── NotificacaoActivity.kt
+    │   └── NotificacaoViewModel.kt
+    └── notificacoes
+        ├── ListaNotificacoesActivity.kt
+        └── ListaNotificacoesViewModel.kt
+```
+
+### Responsabilidades
+
+- **Model:** representa os dados (`Obligation`, `Status`, `Tipo`).
+- **Repository:** concentra acesso e alteração dos dados.
+- **ViewModel:** mantém o estado e executa as ações da tela sem acessar diretamente as Views.
+- **Activity:** apenas configura a interface, observa o ViewModel e encaminha eventos de usuário.
+- **Adapter:** apresenta listas no RecyclerView.
+- **Notification:** contém a infraestrutura específica do Android para alarmes/notificações.
+
+A persistência continua em memória, como no projeto original. O próximo passo para uma aplicação real seria substituir o conteúdo do `ObligationRepository` por Room.

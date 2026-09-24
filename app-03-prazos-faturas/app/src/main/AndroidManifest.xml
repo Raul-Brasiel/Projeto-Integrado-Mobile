@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Obrigacoes">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,13 +24,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".CadastroActivity" android:exported="false" />
-        <activity android:name=".DateTimeActivity" android:exported="false" />
-        <activity android:name=".DetalhesActivity" android:exported="false" />
-        <activity android:name=".NotificacaoActivity" android:exported="false" />
-        <activity android:name=".ListaNotificacoesActivity" android:exported="false" />
+        <activity android:name=".ui.cadastro.CadastroActivity" android:exported="false" />
+        <activity android:name=".ui.datetime.DateTimeActivity" android:exported="false" />
+        <activity android:name=".ui.detalhes.DetalhesActivity" android:exported="false" />
+        <activity android:name=".ui.notificacao.NotificacaoActivity" android:exported="false" />
 
-        <receiver android:name=".NotificationReceiver" android:exported="false" />
+        <receiver android:name=".notification.NotificationReceiver" android:exported="false" />
 
     </application>
 

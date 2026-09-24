@@ -6,7 +6,6 @@
     <string name="title_cadastro">Nova obrigação</string>
     <string name="title_detalhes">Detalhes</string>
     <string name="title_notificacao">Notificação</string>
-    <string name="title_lista_notificacoes">Notificações agendadas</string>
 
     <string name="label_descricao">Descrição</string>
     <string name="label_valor">Valor</string>
@@ -34,6 +33,5 @@
     <string name="opcao_personalizado">Personalizado</string>
 
     <string name="selecionar_data_hora">Selecionar data e hora</string>
-    <string name="lista_vazia">Nenhuma notificação ativa</string>
     <string name="canal_notificacoes">Notificações de obrigações</string>
 </resources>
