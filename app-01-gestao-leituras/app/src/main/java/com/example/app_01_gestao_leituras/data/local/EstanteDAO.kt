@@ -1,6 +1,4 @@
-// Arquivo: data/local/EstanteDAO.kt
 package com.example.app_01_gestao_leituras.data.local
-
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Insert
@@ -11,12 +9,8 @@ import com.example.app_01_gestao_leituras.model.Estante
 import com.example.app_01_gestao_leituras.model.EstanteWithLogs
 import com.example.app_01_gestao_leituras.model.ReadingLogEntity
 import kotlinx.coroutines.flow.Flow
-
 @Dao
 interface EstanteDAO {
-
-    // --- OPERAÇÕES DE LIVROS (ESTANTE) ---
-
     @Query("SELECT * FROM livros")
     fun getAllBooks(): Flow<List<Estante>>
 
@@ -32,9 +26,6 @@ interface EstanteDAO {
     @Transaction
     @Query("SELECT * FROM livros")
     fun getBooksWithLogs(): Flow<List<EstanteWithLogs>>
-
-
-    // --- OPERAÇÕES DE NOTAS E DIÁRIO (READING LOGS) ---
 
     @Insert
     suspend fun insertLog(log: ReadingLogEntity)

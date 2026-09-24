@@ -1,6 +1,4 @@
-// Arquivo: feature/estante/NovoRegistroScreen.kt
 package com.example.app_01_gestao_leituras.feature.estante
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -34,7 +32,7 @@ private val TabContainerColor = Color(0xFFDCD6D0)
 @Composable
 fun NovoRegistroScreen(
     viewModel: ExibirEstante,
-    logToEdit: ReadingLogEntity? = null, // Se passado, ativa o modo de edição
+    logToEdit: ReadingLogEntity? = null,
     onBackClick: () -> Unit,
     onSaveRegistro: (tipo: String, livro: Estante?, pagina: String, nota: String, favorita: Boolean) -> Unit
 ) {
@@ -48,7 +46,6 @@ fun NovoRegistroScreen(
     var notaText by remember { mutableStateOf(logToEdit?.notes ?: "") }
     var isFavorite by remember { mutableStateOf(logToEdit?.isFavorite ?: false) }
 
-    // Define o livro selecionado com base na edição ou no primeiro livro da lista
     LaunchedEffect(books, logToEdit) {
         if (logToEdit != null) {
             selectedBook = books.find { it.id == logToEdit.bookId }
@@ -99,7 +96,6 @@ fun NovoRegistroScreen(
         ) {
             Spacer(modifier = Modifier.height(4.dp))
 
-            // Seletor de Tipo (Diário / Nota)
             Surface(
                 shape = RoundedCornerShape(24.dp),
                 color = TabContainerColor.copy(alpha = 0.6f),
@@ -140,7 +136,6 @@ fun NovoRegistroScreen(
                 }
             }
 
-            // Campo Livro
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text(
                     text = "Livro",
@@ -229,7 +224,6 @@ fun NovoRegistroScreen(
                 }
             }
 
-            // Campo Página (Apenas se for Nota)
             if (selectedType == "Nota") {
                 Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text(
@@ -257,7 +251,6 @@ fun NovoRegistroScreen(
                 }
             }
 
-            // Campo Anotação / Nota
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text(
                     text = if (selectedType == "Nota") "Sua nota" else "Anotação do Diário",
@@ -292,7 +285,6 @@ fun NovoRegistroScreen(
                 )
             }
 
-            // Switch Citação Favorita (Apenas se for Nota)
             if (selectedType == "Nota") {
                 Surface(
                     shape = RoundedCornerShape(16.dp),
@@ -338,7 +330,6 @@ fun NovoRegistroScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Botão Salvar / Atualizar Registro
             Button(
                 onClick = {
                     onSaveRegistro(

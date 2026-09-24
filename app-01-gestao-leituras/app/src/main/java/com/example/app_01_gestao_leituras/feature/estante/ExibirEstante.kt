@@ -1,6 +1,4 @@
-// Arquivo: feature/estante/ExibirEstante.kt
 package com.example.app_01_gestao_leituras.feature.estante
-
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
