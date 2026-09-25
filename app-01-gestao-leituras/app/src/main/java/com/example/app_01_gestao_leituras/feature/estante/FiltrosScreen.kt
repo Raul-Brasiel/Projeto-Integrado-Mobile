@@ -1,4 +1,4 @@
-// Arquivo: feature/estante/FiltrosScreen.kt
+
 package com.example.app_01_gestao_leituras.feature.estante
 
 import androidx.compose.foundation.background
@@ -27,7 +27,6 @@ fun FiltrosScreen(
     onApplyFilters: (selectedGenres: List<String>, selectedStatus: String, sortBy: String) -> Unit,
     onClearFilters: () -> Unit
 ) {
-    // Estados locais para os filtros
     val genresList = listOf("Ficção", "Fantasia", "Romance", "Não Ficção", "Biografia", "Poesia", "Ficção Cientifica", "Terror")
     val selectedGenres = remember { mutableStateMapOf<String, Boolean>().apply { genresList.forEach { this[it] = (it == "Ficção" || it == "Fantasia") } } }
 
@@ -48,7 +47,7 @@ fun FiltrosScreen(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            // Cabeçalho com título e botão X
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -70,9 +69,8 @@ fun FiltrosScreen(
                 }
             }
 
-            // Gêneros (Flow Row simulado ou colunas flexíveis)
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                // Linhas de chips de gêneros
+
                 val rows = genresList.chunked(3)
                 rows.forEach { rowItems ->
                     Row(
@@ -103,7 +101,6 @@ fun FiltrosScreen(
                 }
             }
 
-            // Seção Status
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "Status",
@@ -138,7 +135,6 @@ fun FiltrosScreen(
                 }
             }
 
-            // Seção Ordenar por
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
                     text = "Ordenar por",
@@ -172,7 +168,6 @@ fun FiltrosScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Botões Inferiores (Limpar e Aplicar Filtros)
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)

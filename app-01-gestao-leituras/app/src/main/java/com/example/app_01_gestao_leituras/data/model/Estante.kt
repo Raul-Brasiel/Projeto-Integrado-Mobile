@@ -1,6 +1,4 @@
-// Arquivo: model/Estante.kt
 package com.example.app_01_gestao_leituras.model
-
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.ForeignKey

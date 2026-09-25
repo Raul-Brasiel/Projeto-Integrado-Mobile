@@ -1,6 +1,4 @@
-// Arquivo: feature/estante/BookDetailsScreen.kt
 package com.example.app_01_gestao_leituras.feature.estante
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -107,7 +105,6 @@ fun BookDetailsScreen(
         ) {
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Cabeçalho: Capa (com suporte a imagem do Coil) + Informações principais
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -190,7 +187,6 @@ fun BookDetailsScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Seção de Progresso
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -229,7 +225,6 @@ fun BookDetailsScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Abas (Sobre, Progresso, Diário)
             Surface(
                 shape = RoundedCornerShape(24.dp),
                 color = TabContainerColor,
@@ -276,7 +271,6 @@ fun BookDetailsScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Conteúdo da Aba Ativa
             Box(
                 modifier = Modifier
                     .fillMaxWidth()

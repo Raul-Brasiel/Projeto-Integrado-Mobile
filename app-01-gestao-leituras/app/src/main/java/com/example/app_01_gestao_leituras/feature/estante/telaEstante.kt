@@ -1,6 +1,4 @@
-// Arquivo: feature/estante/telaEstante.kt
 package com.example.app_01_gestao_leituras.feature.estante
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -89,7 +87,7 @@ fun telaEstante(
                         fontWeight = FontWeight.Bold
                     )
                 },
-                // Ação de menu removida conforme solicitado
+
                 actions = {},
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = BackgroundCream)
             )
@@ -219,113 +217,115 @@ fun BookCardItem(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
-        Row(
+        Column(
             modifier = Modifier
                 .padding(12.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+                .fillMaxWidth()
         ) {
-            // Miniatura da Capa
-            Box(
-                modifier = Modifier
-                    .size(width = 65.dp, height = 85.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(SoftRed),
-                contentAlignment = Alignment.Center
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                if (!book.coverPhotoUri.isNullOrBlank()) {
-                    AsyncImage(
-                        model = book.coverPhotoUri,
-                        contentDescription = "Capa do Livro",
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Crop
-                    )
-                } else {
-                    Text(
-                        text = initials,
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp
-                    )
-                }
-            }
 
-            Spacer(modifier = Modifier.width(12.dp))
-
-            // Coluna central expandida para dar espaço total aos textos e evitar cortes no gênero
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = book.title,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 15.sp,
-                    color = Color.Black,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Spacer(modifier = Modifier.height(2.dp))
-                Text(
-                    text = book.author,
-                    fontSize = 13.sp,
-                    color = Color.Gray,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Linha inferior com status e gênero completos
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
+                Box(
+                    modifier = Modifier
+                        .size(width = 65.dp, height = 85.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(SoftRed),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Surface(
-                        shape = RoundedCornerShape(12.dp),
-                        color = RedBadge.copy(alpha = 0.2f)
-                    ) {
+                    if (!book.coverPhotoUri.isNullOrBlank()) {
+                        AsyncImage(
+                            model = book.coverPhotoUri,
+                            contentDescription = "Capa do Livro",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    } else {
                         Text(
-                            text = book.status,
-                            color = RedBadge,
-                            fontSize = 11.sp,
+                            text = initials,
+                            color = Color.White,
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
-                            maxLines = 1
+                            fontSize = 16.sp
                         )
                     }
+                }
 
+                Spacer(modifier = Modifier.width(12.dp))
+
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = book.category,
-                        fontSize = 12.sp,
+                        text = book.title,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 15.sp,
+                        color = Color.Black,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Text(
+                        text = book.author,
+                        fontSize = 13.sp,
                         color = Color.Gray,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Surface(
+                            shape = RoundedCornerShape(12.dp),
+                            color = RedBadge.copy(alpha = 0.2f)
+                        ) {
+                            Text(
+                                text = book.status,
+                                color = RedBadge,
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
+                                maxLines = 1
+                            )
+                        }
+
+                        Text(
+                            text = book.category,
+                            fontSize = 12.sp,
+                            color = Color.Gray,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.width(4.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-            // Ações (Detalhes, Editar, Excluir) em coluna compacta para não espremer o texto ao lado
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row {
-                    IconButton(onClick = { onDetail(book) }, modifier = Modifier.size(32.dp)) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.List,
-                            contentDescription = "Detalhes",
-                            tint = PrimaryPurple
-                        )
-                    }
-                    IconButton(onClick = { onEdit(book) }, modifier = Modifier.size(32.dp)) {
-                        Icon(
-                            imageVector = Icons.Default.Edit,
-                            contentDescription = "Editar",
-                            tint = PrimaryPurple
-                        )
-                    }
+                IconButton(onClick = { onDetail(book) }, modifier = Modifier.size(36.dp)) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.List,
+                        contentDescription = "Detalhes",
+                        tint = PrimaryPurple
+                    )
                 }
-                IconButton(onClick = { showDeleteDialog = true }, modifier = Modifier.size(32.dp)) {
+                Spacer(modifier = Modifier.width(4.dp))
+                IconButton(onClick = { onEdit(book) }, modifier = Modifier.size(36.dp)) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "Editar",
+                        tint = PrimaryPurple
+                    )
+                }
+                Spacer(modifier = Modifier.width(4.dp))
+                IconButton(onClick = { showDeleteDialog = true }, modifier = Modifier.size(36.dp)) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = "Excluir",

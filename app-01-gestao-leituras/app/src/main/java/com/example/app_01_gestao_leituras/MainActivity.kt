@@ -1,6 +1,4 @@
-// Arquivo: MainActivity.kt
 package com.example.app_01_gestao_leituras
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -34,7 +32,6 @@ import com.example.app_01_gestao_leituras.ui.theme.App01gestaoleiturasTheme
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-
 class MainActivity : ComponentActivity() {
 
     private val shelfViewModel: ExibirEstante by viewModels {
@@ -58,7 +55,6 @@ class MainActivity : ComponentActivity() {
                     var selectedBook by remember { mutableStateOf<Estante?>(null) }
                     var selectedLogToEdit by remember { mutableStateOf<ReadingLogEntity?>(null) }
 
-                    // Coleta os livros com seus respectivos logs do banco de dados Room
                     val booksWithLogs by shelfViewModel.booksWithLogs.collectAsState(initial = emptyList())
 
                     val showBottomBar = currentScreen == "shelf" || currentScreen == "diario" || currentScreen == "filtros"
@@ -147,12 +143,10 @@ class MainActivity : ComponentActivity() {
                                     FiltrosScreen(
                                         onCloseClick = { currentScreen = "shelf" },
                                         onApplyFilters = { selectedGenres, selectedStatus, sortBy ->
-                                            // Passa os filtros selecionados para o ViewModel tratar na estante
                                             shelfViewModel.applyFilters(selectedGenres, selectedStatus, sortBy)
                                             currentScreen = "shelf"
                                         },
                                         onClearFilters = {
-                                            // Limpa os filtros no ViewModel e retorna à estante completa
                                             shelfViewModel.clearFilters()
                                             currentScreen = "shelf"
                                         }

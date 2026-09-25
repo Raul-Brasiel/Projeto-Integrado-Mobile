@@ -1,4 +1,3 @@
-// Arquivo: feature/Estante/AddBookScreen.kt
 package com.example.app_01_gestao_leituras.feature.estante
 
 import android.net.Uri
@@ -52,6 +51,7 @@ fun AddBookScreen(
     var selectedStatus by remember { mutableStateOf("Quero ler") }
 
     var coverPhotoUri by remember { mutableStateOf<String?>(null) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -186,7 +186,6 @@ fun AddBookScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Total de Páginas e Página Atual
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -224,7 +223,6 @@ fun AddBookScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Avaliação em Estrelas
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Avaliação", fontWeight = FontWeight.Bold, color = Color.Black, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(8.dp))
@@ -250,7 +248,6 @@ fun AddBookScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Descrição / Sinopse
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Descrição / Sinopse", fontWeight = FontWeight.Bold, color = Color.Black, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(6.dp))
@@ -269,7 +266,6 @@ fun AddBookScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Gênero
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Gênero", fontWeight = FontWeight.Bold, color = Color.Black, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(8.dp))
@@ -306,32 +302,55 @@ fun AddBookScreen(
                 }
             }
 
+            if (errorMessage != null) {
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = errorMessage!!,
+                    color = Color.Red,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
             Spacer(modifier = Modifier.height(30.dp))
 
-            // Botão Salvar Livro
             Button(
                 onClick = {
-                    if (title.isNotBlank() && author.isNotBlank()) {
-                        val pagesInt = totalPages.toIntOrNull() ?: 0
-                        val currentPagesInt = if (selectedStatus == "Lido") {
-                            pagesInt
-                        } else {
-                            currentPage.toIntOrNull() ?: 0
-                        }
-
-                        viewModel.registerBook(
-                            title = title,
-                            author = author,
-                            totalPages = pagesInt,
-                            currentPage = currentPagesInt,
-                            category = selectedCategory,
-                            status = selectedStatus,
-                            description = description,
-                            rating = rating,
-                            coverPhotoUri = coverPhotoUri
-                        )
-                        onBookSaved()
+                    if (title.isBlank() || author.isBlank()) {
+                        errorMessage = "Preencha o título e o autor do livro."
+                        return@Button
                     }
+
+                    val pagesInt = totalPages.toIntOrNull() ?: 0
+                    val currentPagesInt = if (selectedStatus == "Lido") {
+                        pagesInt
+                    } else {
+                        currentPage.toIntOrNull() ?: 0
+                    }
+
+                    if (pagesInt <= 0) {
+                        errorMessage = "O total de páginas deve ser maior que zero."
+                        return@Button
+                    }
+
+                    if (selectedStatus == "Lendo" && currentPagesInt > pagesInt) {
+                        errorMessage = "A quantidade de páginas lidas não pode ser maior que o total de páginas!"
+                        return@Button
+                    }
+
+                    errorMessage = null
+                    viewModel.registerBook(
+                        title = title,
+                        author = author,
+                        totalPages = pagesInt,
+                        currentPage = currentPagesInt,
+                        category = selectedCategory,
+                        status = selectedStatus,
+                        description = description,
+                        rating = rating,
+                        coverPhotoUri = coverPhotoUri
+                    )
+                    onBookSaved()
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = GreenChip),
                 shape = RoundedCornerShape(16.dp),

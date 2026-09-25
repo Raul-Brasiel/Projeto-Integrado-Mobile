@@ -1,6 +1,4 @@
-// Arquivo: feature/estante/AtualizarProgressoScreen.kt
 package com.example.app_01_gestao_leituras.feature.estante
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

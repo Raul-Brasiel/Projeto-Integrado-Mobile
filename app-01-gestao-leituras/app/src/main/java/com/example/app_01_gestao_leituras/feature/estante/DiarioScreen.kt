@@ -1,6 +1,4 @@
-// Arquivo: feature/diario/DiarioScreen.kt
 package com.example.app_01_gestao_leituras.feature.diario
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -86,7 +84,6 @@ fun DiarioScreen(
                 fontWeight = FontWeight.Bold
             )
 
-            // Chips de Seleção de Livros (Scrollável Horizontalmente)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
