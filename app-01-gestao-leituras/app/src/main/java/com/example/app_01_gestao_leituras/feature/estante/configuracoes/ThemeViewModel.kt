@@ -16,12 +16,12 @@ class ThemeViewModel(private val preferences: ThemePreferences) : ViewModel() {
     var accentColor by mutableStateOf(preferences.getAccentColor())
         private set
 
-    fun setThemeMode(mode: ThemeMode) {
+    fun updateThemeMode(mode: ThemeMode) {
         themeMode = mode
         preferences.setThemeMode(mode)
     }
 
-    fun setAccentColor(accentColor: AccentColor) {
+    fun updateAccentColor(accentColor: AccentColor) {
         this.accentColor = accentColor
         preferences.setAccentColor(accentColor)
     }

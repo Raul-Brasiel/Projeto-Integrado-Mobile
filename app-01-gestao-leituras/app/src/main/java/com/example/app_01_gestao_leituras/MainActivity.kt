@@ -139,8 +139,8 @@ class MainActivity : ComponentActivity() {
                                     ConfiguracoesScreen(
                                         themeMode = themeViewModel.themeMode,
                                         accentColor = themeViewModel.accentColor,
-                                        onThemeModeChange = { themeViewModel.setThemeMode(it) },
-                                        onAccentColorChange = { themeViewModel.setAccentColor(it) },
+                                        onThemeModeChange = { themeViewModel.updateThemeMode(it) },
+                                        onAccentColorChange = { themeViewModel.updateAccentColor(it) },
                                         onCloseClick = { currentScreen = "shelf" }
                                     )
                                 }
