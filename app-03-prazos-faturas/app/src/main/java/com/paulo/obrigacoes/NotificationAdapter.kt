@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.Locale
+import com.paulo.obrigacoes.data.model.Obligation
 
 class NotificationAdapter(
     private var items: List<Obligation>,
@@ -30,7 +31,16 @@ class NotificationAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.nome.text = item.descricao
-        holder.dataHora.text = sdf.format(item.vencimentoMillis)
+        
+        val context = holder.itemView.context
+        val diasAntes = when (item.notificacaoLabel) {
+            context.getString(R.string.opcao_no_dia) -> 0
+            context.getString(R.string.opcao_3_dias_antes) -> 3
+            else -> 1
+        }
+        val disparoMillis = item.vencimentoMillis - diasAntes * 24L * 60 * 60 * 1000
+        
+        holder.dataHora.text = sdf.format(disparoMillis)
         holder.remover.setOnClickListener { onRemove(item) }
     }
 

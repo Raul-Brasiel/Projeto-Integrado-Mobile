@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.paulo.obrigacoes.databinding.ActivityListaNotificacoesBinding
+import com.paulo.obrigacoes.data.repository.ObligationRepository
 
 class ListaNotificacoesActivity : AppCompatActivity() {
 

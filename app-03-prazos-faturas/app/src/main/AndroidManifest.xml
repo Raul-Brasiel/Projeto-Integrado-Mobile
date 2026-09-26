@@ -28,6 +28,7 @@
         <activity android:name=".ui.datetime.DateTimeActivity" android:exported="false" />
         <activity android:name=".ui.detalhes.DetalhesActivity" android:exported="false" />
         <activity android:name=".ui.notificacao.NotificacaoActivity" android:exported="false" />
+        <activity android:name=".ListaNotificacoesActivity" android:exported="false" />
 
         <receiver android:name=".notification.NotificationReceiver" android:exported="false" />
 

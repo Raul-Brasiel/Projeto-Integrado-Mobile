@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import com.paulo.obrigacoes.data.repository.ObligationRepository
 
 object NotificationScheduler {
 
@@ -16,7 +17,7 @@ object NotificationScheduler {
             context.getString(R.string.opcao_3_dias_antes) -> 3
             else -> 1
         }
-        val disparoMillis = obligation.vencimentoMillis - diasAntes * 24 * 60 * 60 * 1000
+        val disparoMillis = obligation.vencimentoMillis - diasAntes * 24L * 60 * 60 * 1000
 
         val intent = Intent(context, NotificationReceiver::class.java).apply {
             putExtra("descricao", obligation.descricao)
