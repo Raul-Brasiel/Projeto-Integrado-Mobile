@@ -6,6 +6,8 @@
     <string name="title_cadastro">Nova obrigação</string>
     <string name="title_detalhes">Detalhes</string>
     <string name="title_notificacao">Notificação</string>
+    <string name="title_lista_notificacoes">Notificações</string>
+    <string name="lista_vazia">Nenhuma notificação encontrada.</string>
 
     <string name="label_descricao">Descrição</string>
     <string name="label_valor">Valor</string>
