@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,8 +21,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -29,6 +33,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -74,6 +79,7 @@ fun telaEstante(
     val sortBy = viewModel.sortByOption
 
     var selectedQuickFilter by remember { mutableStateOf("Todos") }
+    var searchQuery by remember { mutableStateOf("") }
 
     Scaffold(
         containerColor = BackgroundCream,
@@ -123,9 +129,30 @@ fun telaEstante(
                 FilterChipItem("Lido", selectedQuickFilter == "Lido") { selectedQuickFilter = "Lido" }
             }
 
+            OutlinedTextField(
+                value = searchQuery,
+                onValueChange = { searchQuery = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 12.dp),
+                placeholder = { Text("Buscar por título, autor ou gênero") },
+                singleLine = true,
+                leadingIcon = {
+                    Icon(Icons.Default.Search, contentDescription = "Buscar")
+                },
+                trailingIcon = {
+                    if (searchQuery.isNotBlank()) {
+                        IconButton(onClick = { searchQuery = "" }) {
+                            Icon(Icons.Default.Clear, contentDescription = "Limpar busca")
+                        }
+                    }
+                },
+                shape = RoundedCornerShape(12.dp)
+            )
+
             Spacer(modifier = Modifier.height(8.dp))
 
-            val processedBooks = remember(books, selectedQuickFilter, selectedGenres, selectedStatus, sortBy) {
+            val processedBooks = remember(books, selectedQuickFilter, selectedGenres, selectedStatus, sortBy, searchQuery) {
                 var list = books
 
                 if (selectedQuickFilter != "Todos") {
@@ -142,6 +169,15 @@ fun telaEstante(
                     }
                 }
 
+                if (searchQuery.isNotBlank()) {
+                    val query = searchQuery.trim()
+                    list = list.filter { book ->
+                        book.title.contains(query, ignoreCase = true) ||
+                                book.author.contains(query, ignoreCase = true) ||
+                                book.category.contains(query, ignoreCase = true)
+                    }
+                }
+
                 list = when (sortBy) {
                     "Título (A-Z)" -> list.sortedBy { it.title }
                     "Autor(A-Z)" -> list.sortedBy { it.author }
@@ -154,22 +190,56 @@ fun telaEstante(
                 list
             }
 
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                items(processedBooks) { book ->
-                    BookCardItem(
-                        book = book,
-                        onDetail = { selectedBook ->
-                            onNavigateToDetails(selectedBook)
-                        },
-                        onEdit = { selectedBook ->
-                            onNavigateToDetails(selectedBook)
-                        },
-                        onDelete = { selectedBook ->
-                            viewModel.deleteBook(selectedBook)
+            if (processedBooks.isEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .padding(top = 48.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(
+                            imageVector = Icons.Default.SearchOff,
+                            contentDescription = null,
+                            tint = Color.Gray,
+                            modifier = Modifier.size(48.dp)
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text(
+                            text = "Nenhum livro encontrado",
+                            color = Color.Gray,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 16.sp
+                        )
+                        if (searchQuery.isNotBlank()) {
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = "Tente buscar por outro título, autor ou gênero",
+                                color = Color.Gray,
+                                fontSize = 13.sp
+                            )
                         }
-                    )
+                    }
+                }
+            } else {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    items(processedBooks) { book ->
+                        BookCardItem(
+                            book = book,
+                            onDetail = { selectedBook ->
+                                onNavigateToDetails(selectedBook)
+                            },
+                            onEdit = { selectedBook ->
+                                onNavigateToDetails(selectedBook)
+                            },
+                            onDelete = { selectedBook ->
+                                viewModel.deleteBook(selectedBook)
+                            }
+                        )
+                    }
                 }
             }
         }
