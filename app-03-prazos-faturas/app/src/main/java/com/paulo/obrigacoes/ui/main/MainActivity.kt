@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.paulo.obrigacoes.ListaNotificacoesActivity
 import com.paulo.obrigacoes.R
 import com.paulo.obrigacoes.databinding.ActivityMainBinding
 import com.paulo.obrigacoes.ui.adapter.ObligationAdapter
@@ -42,6 +43,9 @@ class MainActivity : AppCompatActivity() {
     private fun configurarEventos() {
         binding.fabAdicionar.setOnClickListener {
             startActivity(Intent(this, CadastroActivity::class.java))
+        }
+        binding.btnNotificacoes.setOnClickListener {
+            startActivity(Intent(this, ListaNotificacoesActivity::class.java))
         }
     }
 

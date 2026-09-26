@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.paulo.obrigacoes.databinding.ActivityDetalhesBinding
+import com.paulo.obrigacoes.ui.main.MainActivity
 import java.text.SimpleDateFormat
 import java.util.Locale
 

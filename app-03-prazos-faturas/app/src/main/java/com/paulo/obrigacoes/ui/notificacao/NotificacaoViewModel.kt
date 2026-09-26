@@ -18,4 +18,6 @@ class NotificacaoViewModel : ViewModel() {
     }
 
     fun getObligationId(): Long = obligationId
+
+    fun getObligation() = ObligationRepository.getById(obligationId)
 }

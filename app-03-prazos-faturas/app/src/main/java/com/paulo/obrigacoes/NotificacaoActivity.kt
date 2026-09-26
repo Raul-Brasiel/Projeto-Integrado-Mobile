@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.paulo.obrigacoes.databinding.ActivityNotificacaoBinding
+import com.paulo.obrigacoes.ui.main.MainActivity
 
 class NotificacaoActivity : AppCompatActivity() {
 

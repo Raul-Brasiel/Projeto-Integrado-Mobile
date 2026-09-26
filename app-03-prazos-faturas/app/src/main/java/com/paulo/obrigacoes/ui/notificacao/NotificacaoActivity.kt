@@ -24,6 +24,17 @@ class NotificacaoActivity : AppCompatActivity() {
 
         val id = intent.getLongExtra(MainActivity.EXTRA_ID, -1L)
         viewModel.carregar(id)
+        
+        viewModel.getObligation()?.let { obligation ->
+            if (obligation.notificacaoAtiva) {
+                when (obligation.notificacaoLabel) {
+                    getString(R.string.opcao_no_dia) -> binding.radioGroupOpcoes.check(R.id.opcaoNoDia)
+                    getString(R.string.opcao_3_dias_antes) -> binding.radioGroupOpcoes.check(R.id.opcao3Dias)
+                    getString(R.string.opcao_personalizado) -> binding.radioGroupOpcoes.check(R.id.opcaoPersonalizado)
+                    else -> binding.radioGroupOpcoes.check(R.id.opcao1Dia)
+                }
+            }
+        }
 
         configurarEventos()
     }
