@@ -17,7 +17,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.app_01_gestao_leituras.data.local.AppDatabase
+import com.example.app_01_gestao_leituras.data.local.ThemePreferences
 import com.example.app_01_gestao_leituras.data.repository.EstanteRepository
+import com.example.app_01_gestao_leituras.feature.configuracoes.ConfiguracoesScreen
+import com.example.app_01_gestao_leituras.feature.configuracoes.ThemeViewModel
 import com.example.app_01_gestao_leituras.feature.estante.telaEstante
 import com.example.app_01_gestao_leituras.feature.estante.AddBookScreen
 import com.example.app_01_gestao_leituras.feature.estante.ExibirEstante
@@ -45,11 +48,24 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private val themeViewModel: ThemeViewModel by viewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                val preferences = ThemePreferences(applicationContext)
+                @Suppress("UNCHECKED_CAST")
+                return ThemeViewModel(preferences) as T
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            App01gestaoleiturasTheme {
+            App01gestaoleiturasTheme(
+                themeMode = themeViewModel.themeMode,
+                accentColor = themeViewModel.accentColor
+            ) {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     var currentScreen by remember { mutableStateOf("shelf") }
                     var selectedBook by remember { mutableStateOf<Estante?>(null) }
@@ -63,7 +79,7 @@ class MainActivity : ComponentActivity() {
                         bottomBar = {
                             if (showBottomBar) {
                                 NavigationBar(
-                                    containerColor = Color(0xFFFBF9F1)
+                                    containerColor = MaterialTheme.colorScheme.surface
                                 ) {
                                     NavigationBarItem(
                                         icon = { Icon(Icons.Default.Home, contentDescription = "Estante") },
@@ -71,9 +87,9 @@ class MainActivity : ComponentActivity() {
                                         selected = currentScreen == "shelf",
                                         onClick = { currentScreen = "shelf" },
                                         colors = NavigationBarItemDefaults.colors(
-                                            selectedIconColor = Color(0xFF1B5E20),
-                                            selectedTextColor = Color(0xFF1B5E20),
-                                            indicatorColor = Color(0xFFDCD6D0)
+                                            selectedIconColor = MaterialTheme.colorScheme.primary,
+                                            selectedTextColor = MaterialTheme.colorScheme.primary,
+                                            indicatorColor = MaterialTheme.colorScheme.primaryContainer
                                         )
                                     )
                                     NavigationBarItem(
@@ -82,9 +98,9 @@ class MainActivity : ComponentActivity() {
                                         selected = currentScreen == "diario",
                                         onClick = { currentScreen = "diario" },
                                         colors = NavigationBarItemDefaults.colors(
-                                            selectedIconColor = Color(0xFF1B5E20),
-                                            selectedTextColor = Color(0xFF1B5E20),
-                                            indicatorColor = Color(0xFFDCD6D0)
+                                            selectedIconColor = MaterialTheme.colorScheme.primary,
+                                            selectedTextColor = MaterialTheme.colorScheme.primary,
+                                            indicatorColor = MaterialTheme.colorScheme.primaryContainer
                                         )
                                     )
                                     NavigationBarItem(
@@ -93,9 +109,9 @@ class MainActivity : ComponentActivity() {
                                         selected = currentScreen == "filtros",
                                         onClick = { currentScreen = "filtros" },
                                         colors = NavigationBarItemDefaults.colors(
-                                            selectedIconColor = Color(0xFF1B5E20),
-                                            selectedTextColor = Color(0xFF1B5E20),
-                                            indicatorColor = Color(0xFFDCD6D0)
+                                            selectedIconColor = MaterialTheme.colorScheme.primary,
+                                            selectedTextColor = MaterialTheme.colorScheme.primary,
+                                            indicatorColor = MaterialTheme.colorScheme.primaryContainer
                                         )
                                     )
                                 }
@@ -115,7 +131,17 @@ class MainActivity : ComponentActivity() {
                                         onNavigateToDetails = { book ->
                                             selectedBook = book
                                             currentScreen = "book_details"
-                                        }
+                                        },
+                                        onNavigateToSettings = { currentScreen = "configuracoes" }
+                                    )
+                                }
+                                "configuracoes" -> {
+                                    ConfiguracoesScreen(
+                                        themeMode = themeViewModel.themeMode,
+                                        accentColor = themeViewModel.accentColor,
+                                        onThemeModeChange = { themeViewModel.setThemeMode(it) },
+                                        onAccentColorChange = { themeViewModel.setAccentColor(it) },
+                                        onCloseClick = { currentScreen = "shelf" }
                                     )
                                 }
                                 "diario" -> {
