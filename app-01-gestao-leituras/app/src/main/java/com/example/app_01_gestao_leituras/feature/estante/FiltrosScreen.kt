@@ -15,11 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-private val BackgroundCream = Color(0xFFFBF9F1)
 private val DarkGreen = Color(0xFF1B5E20)
-private val LightGrayButton = Color(0xFFF0F0F0)
-private val ChipSelectedColor = Color(0xFF1B5E20)
-private val ChipUnselectedColor = Color(0xFFFFFFFF)
 
 @Composable
 fun FiltrosScreen(
@@ -38,7 +34,7 @@ fun FiltrosScreen(
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = BackgroundCream
+        color = MaterialTheme.colorScheme.background
     ) {
         Column(
             modifier = Modifier
@@ -57,15 +53,15 @@ fun FiltrosScreen(
                     text = "Filtros",
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.Black
+                    color = MaterialTheme.colorScheme.onBackground
                 )
                 IconButton(
                     onClick = onCloseClick,
                     modifier = Modifier
                         .size(40.dp)
-                        .background(Color(0xFFEFECE6), shape = RoundedCornerShape(12.dp))
+                        .background(MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(12.dp))
                 ) {
-                    Text(text = "✕", fontWeight = FontWeight.Bold, color = Color.Black)
+                    Text(text = "✕", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
 
@@ -85,13 +81,13 @@ fun FiltrosScreen(
                                 label = {
                                     Text(
                                         text = genre,
-                                        color = if (isSelected) Color.White else Color.Black,
+                                        color = if (isSelected) Color.White else MaterialTheme.colorScheme.onSurface,
                                         fontWeight = FontWeight.Medium
                                     )
                                 },
                                 colors = FilterChipDefaults.filterChipColors(
-                                    selectedContainerColor = ChipSelectedColor,
-                                    containerColor = ChipUnselectedColor
+                                    selectedContainerColor = DarkGreen,
+                                    containerColor = MaterialTheme.colorScheme.surface
                                 ),
                                 shape = RoundedCornerShape(20.dp),
                                 modifier = Modifier.weight(1f, fill = false)
@@ -106,7 +102,7 @@ fun FiltrosScreen(
                     text = "Status",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.Black
+                    color = MaterialTheme.colorScheme.onBackground
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -120,13 +116,13 @@ fun FiltrosScreen(
                             label = {
                                 Text(
                                     text = status,
-                                    color = if (isSelected) Color.White else Color.Black,
+                                    color = if (isSelected) Color.White else MaterialTheme.colorScheme.onSurface,
                                     fontWeight = FontWeight.Bold
                                 )
                             },
                             colors = FilterChipDefaults.filterChipColors(
-                                selectedContainerColor = ChipSelectedColor,
-                                containerColor = ChipUnselectedColor
+                                selectedContainerColor = DarkGreen,
+                                containerColor = MaterialTheme.colorScheme.surface
                             ),
                             shape = RoundedCornerShape(20.dp),
                             modifier = Modifier.weight(1f)
@@ -140,7 +136,7 @@ fun FiltrosScreen(
                     text = "Ordenar por",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.Black
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 sortOptions.forEach { option ->
@@ -153,14 +149,14 @@ fun FiltrosScreen(
                         RadioButton(
                             selected = (sortBy == option),
                             onClick = { sortBy = option },
-                            colors = RadioButtonDefaults.colors(selectedColor = Color.Black)
+                            colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primary)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = option,
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Medium,
-                            color = Color.Black
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                     }
                 }
@@ -176,7 +172,7 @@ fun FiltrosScreen(
                     onClick = {
                         onClearFilters()
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = LightGrayButton),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
                     shape = RoundedCornerShape(16.dp),
                     modifier = Modifier
                         .weight(1f)
@@ -184,7 +180,7 @@ fun FiltrosScreen(
                 ) {
                     Text(
                         text = "Limpar",
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontWeight = FontWeight.Bold,
                         fontSize = 15.sp
                     )

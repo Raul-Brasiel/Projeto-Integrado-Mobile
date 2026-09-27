@@ -28,8 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 
-private val PrimaryPurple = Color(0xFF4A2B6F)
-private val BackgroundCream = Color(0xFFFBF9F1)
 private val GreenChip = Color(0xFF1B5E20)
 private val StarYellow = Color(0xFFFFC107)
 
@@ -65,20 +63,20 @@ fun AddBookScreen(
     val statuses = listOf("Quero ler", "Lendo", "Lido")
 
     val textFieldColors = OutlinedTextFieldDefaults.colors(
-        focusedContainerColor = Color(0xFFEFECE6),
-        unfocusedContainerColor = Color(0xFFEFECE6),
-        focusedBorderColor = PrimaryPurple,
+        focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+        focusedBorderColor = MaterialTheme.colorScheme.primary,
         unfocusedBorderColor = Color.Transparent
     )
 
     Scaffold(
-        containerColor = BackgroundCream,
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
                 title = {
                     Text(
                         text = "Novo Livro",
-                        color = PrimaryPurple,
+                        color = MaterialTheme.colorScheme.primary,
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -88,11 +86,11 @@ fun AddBookScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Voltar",
-                            tint = PrimaryPurple
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = BackgroundCream)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background)
             )
         }
     ) { paddingValues ->
@@ -125,7 +123,7 @@ fun AddBookScreen(
                     Icon(
                         imageVector = Icons.Default.AddAPhoto,
                         contentDescription = "Adicionar Capa",
-                        tint = PrimaryPurple,
+                        tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(32.dp)
                     )
                 }
@@ -134,12 +132,12 @@ fun AddBookScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             Column(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Título", fontWeight = FontWeight.Bold, color = Color.Black, fontSize = 14.sp)
+                Text(text = "Título", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(6.dp))
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
-                    placeholder = { Text("ex: Harry Potter e a Pedra Filosofal", color = Color.Gray) },
+                    placeholder = { Text("ex: Harry Potter e a Pedra Filosofal", color = MaterialTheme.colorScheme.onSurfaceVariant) },
                     shape = RoundedCornerShape(16.dp),
                     colors = textFieldColors,
                     modifier = Modifier.fillMaxWidth()
@@ -149,12 +147,12 @@ fun AddBookScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Column(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Autor", fontWeight = FontWeight.Bold, color = Color.Black, fontSize = 14.sp)
+                Text(text = "Autor", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(6.dp))
                 OutlinedTextField(
                     value = author,
                     onValueChange = { author = it },
-                    placeholder = { Text("ex: J. K. Rowling", color = Color.Gray) },
+                    placeholder = { Text("ex: J. K. Rowling", color = MaterialTheme.colorScheme.onSurfaceVariant) },
                     shape = RoundedCornerShape(16.dp),
                     colors = textFieldColors,
                     modifier = Modifier.fillMaxWidth()
@@ -164,7 +162,7 @@ fun AddBookScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Column(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Lista / Status", fontWeight = FontWeight.Bold, color = Color.Black, fontSize = 14.sp)
+                Text(text = "Lista / Status", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(6.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -176,7 +174,7 @@ fun AddBookScreen(
                             onClick = { selectedStatus = status },
                             label = { Text(status) },
                             colors = FilterChipDefaults.filterChipColors(
-                                selectedContainerColor = PrimaryPurple,
+                                selectedContainerColor = MaterialTheme.colorScheme.primary,
                                 selectedLabelColor = Color.White
                             )
                         )
@@ -191,12 +189,12 @@ fun AddBookScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(text = "Total de Páginas", fontWeight = FontWeight.Bold, color = Color.Black, fontSize = 14.sp)
+                    Text(text = "Total de Páginas", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground, fontSize = 14.sp)
                     Spacer(modifier = Modifier.height(6.dp))
                     OutlinedTextField(
                         value = totalPages,
                         onValueChange = { totalPages = it },
-                        placeholder = { Text("ex: 224", color = Color.Gray) },
+                        placeholder = { Text("ex: 224", color = MaterialTheme.colorScheme.onSurfaceVariant) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         shape = RoundedCornerShape(16.dp),
                         colors = textFieldColors,
@@ -206,12 +204,12 @@ fun AddBookScreen(
 
                 if (selectedStatus == "Lendo" || selectedStatus == "Lido") {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text(text = "Página Atual", fontWeight = FontWeight.Bold, color = Color.Black, fontSize = 14.sp)
+                        Text(text = "Página Atual", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground, fontSize = 14.sp)
                         Spacer(modifier = Modifier.height(6.dp))
                         OutlinedTextField(
                             value = currentPage,
                             onValueChange = { currentPage = it },
-                            placeholder = { Text("ex: 50", color = Color.Gray) },
+                            placeholder = { Text("ex: 50", color = MaterialTheme.colorScheme.onSurfaceVariant) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             shape = RoundedCornerShape(16.dp),
                             colors = textFieldColors,
@@ -224,7 +222,7 @@ fun AddBookScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Column(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Avaliação", fontWeight = FontWeight.Bold, color = Color.Black, fontSize = 14.sp)
+                Text(text = "Avaliação", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -249,12 +247,12 @@ fun AddBookScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Column(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Descrição / Sinopse", fontWeight = FontWeight.Bold, color = Color.Black, fontSize = 14.sp)
+                Text(text = "Descrição / Sinopse", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(6.dp))
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
-                    placeholder = { Text("Escreva uma breve sinopse sobre o livro...", color = Color.Gray) },
+                    placeholder = { Text("Escreva uma breve sinopse sobre o livro...", color = MaterialTheme.colorScheme.onSurfaceVariant) },
                     shape = RoundedCornerShape(16.dp),
                     colors = textFieldColors,
                     modifier = Modifier
@@ -267,7 +265,7 @@ fun AddBookScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Column(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Gênero", fontWeight = FontWeight.Bold, color = Color.Black, fontSize = 14.sp)
+                Text(text = "Gênero", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onBackground, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -280,7 +278,7 @@ fun AddBookScreen(
                                 Surface(
                                     onClick = { selectedCategory = category },
                                     shape = RoundedCornerShape(16.dp),
-                                    color = if (selectedCategory == category) PrimaryPurple else Color.White,
+                                    color = if (selectedCategory == category) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
                                     shadowElevation = 1.dp,
                                     modifier = Modifier.weight(1f)
                                 ) {
@@ -290,7 +288,7 @@ fun AddBookScreen(
                                     ) {
                                         Text(
                                             text = category,
-                                            color = if (selectedCategory == category) Color.White else Color.Black,
+                                            color = if (selectedCategory == category) Color.White else MaterialTheme.colorScheme.onSurface,
                                             fontSize = 12.sp,
                                             fontWeight = FontWeight.Medium
                                         )

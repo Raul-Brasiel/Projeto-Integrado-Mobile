@@ -21,9 +21,6 @@ import com.example.app_01_gestao_leituras.model.Estante
 import com.example.app_01_gestao_leituras.model.EstanteWithLogs
 import com.example.app_01_gestao_leituras.model.ReadingLogEntity
 
-private val PrimaryPurple = Color(0xFF4A2B6F)
-private val BackgroundCream = Color(0xFFFBF9F1)
-private val CardBackground = Color(0xFFFFFFFF)
 private val GreenButton = Color(0xFF1B5E20)
 private val SoftRed = Color(0xFFE57373)
 private val SoftYellow = Color(0xFFFFF9C4)
@@ -55,7 +52,7 @@ fun DiarioScreen(
     val availableBooks = booksWithLogs.map { it.estante }
 
     Scaffold(
-        containerColor = BackgroundCream,
+        containerColor = MaterialTheme.colorScheme.background,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = onAddNoteClick,
@@ -79,7 +76,7 @@ fun DiarioScreen(
 
             Text(
                 text = "Diário & notas",
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 26.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -97,8 +94,8 @@ fun DiarioScreen(
                     colors = FilterChipDefaults.filterChipColors(
                         selectedContainerColor = GreenButton,
                         selectedLabelColor = Color.White,
-                        containerColor = Color.White,
-                        labelColor = Color.DarkGray
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        labelColor = MaterialTheme.colorScheme.onSurfaceVariant
                     ),
                     shape = RoundedCornerShape(20.dp)
                 )
@@ -112,8 +109,8 @@ fun DiarioScreen(
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = GreenButton,
                             selectedLabelColor = Color.White,
-                            containerColor = Color.White,
-                            labelColor = Color.DarkGray
+                            containerColor = MaterialTheme.colorScheme.surface,
+                            labelColor = MaterialTheme.colorScheme.onSurfaceVariant
                         ),
                         shape = RoundedCornerShape(20.dp)
                     )
@@ -131,7 +128,7 @@ fun DiarioScreen(
                 ) {
                     Text(
                         text = "Nenhum registro encontrado.",
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 14.sp
                     )
                 }
@@ -141,9 +138,11 @@ fun DiarioScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     filteredLogs.forEach { (book, log) ->
+                        val cardTextColor = if (log.isFavorite) Color.Black else MaterialTheme.colorScheme.onSurface
+                        val cardSecondaryTextColor = if (log.isFavorite) Color.DarkGray else MaterialTheme.colorScheme.onSurfaceVariant
                         Card(
                             colors = CardDefaults.cardColors(
-                                containerColor = if (log.isFavorite) SoftYellow else CardBackground
+                                containerColor = if (log.isFavorite) SoftYellow else MaterialTheme.colorScheme.surface
                             ),
                             shape = RoundedCornerShape(16.dp),
                             elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
@@ -164,11 +163,11 @@ fun DiarioScreen(
                                 ) {
                                     Surface(
                                         shape = RoundedCornerShape(8.dp),
-                                        color = PrimaryPurple.copy(alpha = 0.1f)
+                                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
                                     ) {
                                         Text(
                                             text = log.type,
-                                            color = PrimaryPurple,
+                                            color = MaterialTheme.colorScheme.primary,
                                             fontSize = 11.sp,
                                             fontWeight = FontWeight.Bold,
                                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
@@ -183,7 +182,7 @@ fun DiarioScreen(
                                             Icon(
                                                 imageVector = Icons.Default.Edit,
                                                 contentDescription = "Editar",
-                                                tint = PrimaryPurple
+                                                tint = MaterialTheme.colorScheme.primary
                                             )
                                         }
                                         Spacer(modifier = Modifier.width(4.dp))
@@ -206,7 +205,7 @@ fun DiarioScreen(
                                     text = "“${log.notes}”",
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight.Medium,
-                                    color = Color.Black
+                                    color = cardTextColor
                                 )
 
                                 Spacer(modifier = Modifier.height(8.dp))
@@ -220,7 +219,7 @@ fun DiarioScreen(
                                         text = book.title,
                                         fontSize = 12.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = Color.Gray,
+                                        color = cardSecondaryTextColor,
                                         maxLines = 1,
                                         modifier = Modifier.weight(1f)
                                     )
@@ -229,7 +228,7 @@ fun DiarioScreen(
                                         Text(
                                             text = "Pág. ${log.page}",
                                             fontSize = 11.sp,
-                                            color = Color.Gray
+                                            color = cardSecondaryTextColor
                                         )
                                     }
                                 }

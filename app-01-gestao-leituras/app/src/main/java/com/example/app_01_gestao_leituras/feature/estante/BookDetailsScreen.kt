@@ -26,13 +26,9 @@ import coil.compose.AsyncImage
 import com.example.app_01_gestao_leituras.model.Estante
 import com.example.app_01_gestao_leituras.model.ReadingLogEntity
 
-private val PrimaryPurple = Color(0xFF4A2B6F)
-private val BackgroundCream = Color(0xFFFBF9F1)
 private val SoftRed = Color(0xFFE57373)
 private val StarYellow = Color(0xFFFFC107)
 private val GreenButton = Color(0xFF1B5E20)
-private val TabContainerColor = Color(0xFFDCD6D0)
-private val ChipSelectedColor = Color(0xFFFFFFFF)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -57,13 +53,13 @@ fun BookDetailsScreen(
     }
 
     Scaffold(
-        containerColor = BackgroundCream,
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
                 title = {
                     Text(
                         text = "Detalhes",
-                        color = PrimaryPurple,
+                        color = MaterialTheme.colorScheme.primary,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -73,7 +69,7 @@ fun BookDetailsScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Voltar",
-                            tint = PrimaryPurple
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     }
                 },
@@ -87,11 +83,11 @@ fun BookDetailsScreen(
                         Icon(
                             imageVector = Icons.Default.Check,
                             contentDescription = "Concluído",
-                            tint = Color.Black
+                            tint = MaterialTheme.colorScheme.onBackground
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = BackgroundCream)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background)
             )
         }
     ) { paddingValues ->
@@ -140,14 +136,14 @@ fun BookDetailsScreen(
                         text = book.title,
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp,
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.onBackground,
                         maxLines = 3
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = book.author,
                         fontSize = 13.sp,
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines = 1
                     )
                     Spacer(modifier = Modifier.height(6.dp))
@@ -194,14 +190,14 @@ fun BookDetailsScreen(
                 Box(
                     modifier = Modifier
                         .size(60.dp)
-                        .background(Color.White, shape = CircleShape),
+                        .background(MaterialTheme.colorScheme.surface, shape = CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "$progressPercentage%",
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.Black
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                 }
 
@@ -212,13 +208,13 @@ fun BookDetailsScreen(
                         text = "Página $currentPage de $totalPages",
                         fontWeight = FontWeight.Bold,
                         fontSize = 15.sp,
-                        color = Color.Black
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                     Spacer(modifier = Modifier.height(2.dp))
                     Text(
                         text = "Progresso de Leitura",
                         fontSize = 13.sp,
-                        color = Color.Gray
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
@@ -227,7 +223,7 @@ fun BookDetailsScreen(
 
             Surface(
                 shape = RoundedCornerShape(24.dp),
-                color = TabContainerColor,
+                color = MaterialTheme.colorScheme.surfaceVariant,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
@@ -243,7 +239,7 @@ fun BookDetailsScreen(
                         val isSelected = selectedTab == tab
                         Surface(
                             shape = RoundedCornerShape(20.dp),
-                            color = if (isSelected) ChipSelectedColor else Color.Transparent,
+                            color = if (isSelected) MaterialTheme.colorScheme.surface else Color.Transparent,
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxHeight()
@@ -258,7 +254,7 @@ fun BookDetailsScreen(
                                 ) {
                                     Text(
                                         text = tab,
-                                        color = if (isSelected) Color.Black else Color.DarkGray,
+                                        color = if (isSelected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant,
                                         fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                                         fontSize = 14.sp
                                     )
@@ -283,7 +279,7 @@ fun BookDetailsScreen(
                         Text(
                             text = if (synopsis.isNotBlank()) synopsis else "Nenhuma sinopse cadastrada para este livro.",
                             fontSize = 14.sp,
-                            color = Color.DarkGray,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             lineHeight = 20.sp
                         )
                     }
@@ -296,7 +292,7 @@ fun BookDetailsScreen(
                                 text = "Visão Geral do Progresso",
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 15.sp,
-                                color = PrimaryPurple
+                                color = MaterialTheme.colorScheme.primary
                             )
 
                             LinearProgressIndicator(
@@ -315,19 +311,19 @@ fun BookDetailsScreen(
                                 Text(
                                     text = "Lidas: $currentPage pág.",
                                     fontSize = 13.sp,
-                                    color = Color.DarkGray
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                                 Text(
                                     text = "Faltam: $pagesRemaining pág.",
                                     fontSize = 13.sp,
-                                    color = Color.DarkGray
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
 
                             Spacer(modifier = Modifier.height(4.dp))
 
                             Card(
-                                colors = CardDefaults.cardColors(containerColor = Color.White),
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                                 shape = RoundedCornerShape(12.dp),
                                 modifier = Modifier.fillMaxWidth()
                             ) {
@@ -336,7 +332,7 @@ fun BookDetailsScreen(
                                         text = "Status Atual: ${book.status}",
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 14.sp,
-                                        color = Color.Black
+                                        color = MaterialTheme.colorScheme.onSurface
                                     )
                                     Spacer(modifier = Modifier.height(4.dp))
                                     Text(
@@ -345,7 +341,7 @@ fun BookDetailsScreen(
                                         else
                                             "Continue avançando para alcançar sua meta!",
                                         fontSize = 13.sp,
-                                        color = Color.Gray
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                 }
                             }
@@ -358,7 +354,7 @@ fun BookDetailsScreen(
                         ) {
                             Button(
                                 onClick = onNavigateToAddLog,
-                                colors = ButtonDefaults.buttonColors(containerColor = PrimaryPurple),
+                                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                                 shape = RoundedCornerShape(12.dp),
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -384,7 +380,7 @@ fun BookDetailsScreen(
                                 Text(
                                     text = "Nenhuma nota ou diário registrado para este livro.",
                                     fontSize = 14.sp,
-                                    color = Color.DarkGray
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             } else {
                                 Column(
@@ -393,7 +389,7 @@ fun BookDetailsScreen(
                                 ) {
                                     bookLogs.forEach { log ->
                                         Card(
-                                            colors = CardDefaults.cardColors(containerColor = Color.White),
+                                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                                             shape = RoundedCornerShape(12.dp),
                                             elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
                                             modifier = Modifier.fillMaxWidth()
@@ -410,11 +406,11 @@ fun BookDetailsScreen(
                                                 ) {
                                                     Surface(
                                                         shape = RoundedCornerShape(8.dp),
-                                                        color = PrimaryPurple.copy(alpha = 0.1f)
+                                                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
                                                     ) {
                                                         Text(
                                                             text = log.type,
-                                                            color = PrimaryPurple,
+                                                            color = MaterialTheme.colorScheme.primary,
                                                             fontSize = 11.sp,
                                                             fontWeight = FontWeight.Bold,
                                                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
@@ -429,7 +425,7 @@ fun BookDetailsScreen(
                                                             Icon(
                                                                 imageVector = Icons.Default.Edit,
                                                                 contentDescription = "Editar",
-                                                                tint = PrimaryPurple
+                                                                tint = MaterialTheme.colorScheme.primary
                                                             )
                                                         }
                                                         Spacer(modifier = Modifier.width(4.dp))
@@ -452,14 +448,14 @@ fun BookDetailsScreen(
                                                     text = book.title,
                                                     fontWeight = FontWeight.Bold,
                                                     fontSize = 14.sp,
-                                                    color = Color.Black
+                                                    color = MaterialTheme.colorScheme.onSurface
                                                 )
 
                                                 if (log.type == "Nota" && log.page.isNotBlank()) {
                                                     Text(
                                                         text = "Página: ${log.page}",
                                                         fontSize = 12.sp,
-                                                        color = Color.Gray
+                                                        color = MaterialTheme.colorScheme.onSurfaceVariant
                                                     )
                                                 }
 
@@ -468,7 +464,7 @@ fun BookDetailsScreen(
                                                 Text(
                                                     text = log.notes,
                                                     fontSize = 13.sp,
-                                                    color = Color.DarkGray
+                                                    color = MaterialTheme.colorScheme.onSurfaceVariant
                                                 )
 
                                                 Spacer(modifier = Modifier.height(8.dp))
@@ -476,7 +472,7 @@ fun BookDetailsScreen(
                                                 Text(
                                                     text = "Modificado em: ${log.date}",
                                                     fontSize = 11.sp,
-                                                    color = Color.LightGray
+                                                    color = MaterialTheme.colorScheme.outline
                                                 )
                                             }
                                         }

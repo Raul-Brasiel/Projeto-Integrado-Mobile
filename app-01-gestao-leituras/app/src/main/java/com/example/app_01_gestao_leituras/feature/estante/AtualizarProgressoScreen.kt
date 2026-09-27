@@ -29,6 +29,7 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -48,8 +49,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.app_01_gestao_leituras.model.Estante
 
-private val PrimaryPurple = Color(0xFF4A2B6F)
-private val BackgroundCream = Color(0xFFFBF9F1)
 private val GreenChip = Color(0xFF1B5E20)
 private val RedBadge = Color(0xFFD9534F)
 private val SoftRed = Color(0xFFE57373)
@@ -78,13 +77,13 @@ fun AtualizarProgressoScreen(
     }
 
     Scaffold(
-        containerColor = BackgroundCream,
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
                 title = {
                     Text(
                         text = "Atualizar Progresso",
-                        color = PrimaryPurple,
+                        color = MaterialTheme.colorScheme.primary,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -94,11 +93,11 @@ fun AtualizarProgressoScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Voltar",
-                            tint = PrimaryPurple
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = BackgroundCream)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background)
             )
         }
     ) { paddingValues ->
@@ -114,7 +113,7 @@ fun AtualizarProgressoScreen(
 
             Card(
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                 elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -145,14 +144,14 @@ fun AtualizarProgressoScreen(
                             text = book.title,
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.sp,
-                            color = Color.Black,
+                            color = MaterialTheme.colorScheme.onSurface,
                             maxLines = 2
                         )
                         Spacer(modifier = Modifier.height(2.dp))
                         Text(
                             text = book.author,
                             fontSize = 12.sp,
-                            color = Color.Gray,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             maxLines = 1
                         )
                     }
@@ -164,7 +163,7 @@ fun AtualizarProgressoScreen(
             Box(
                 modifier = Modifier
                     .size(160.dp)
-                    .background(Color.White, shape = CircleShape),
+                    .background(MaterialTheme.colorScheme.surface, shape = CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -172,12 +171,12 @@ fun AtualizarProgressoScreen(
                         text = "$progressPercentage%",
                         fontSize = 32.sp,
                         fontWeight = FontWeight.Bold,
-                        color = PrimaryPurple
+                        color = MaterialTheme.colorScheme.primary
                     )
                     Text(
                         text = "Concluído",
                         fontSize = 13.sp,
-                        color = Color.Gray
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
@@ -187,7 +186,7 @@ fun AtualizarProgressoScreen(
             Text(
                 text = "Página atual",
                 fontWeight = FontWeight.Bold,
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 14.sp,
                 modifier = Modifier.align(Alignment.Start)
             )
@@ -207,7 +206,7 @@ fun AtualizarProgressoScreen(
                     },
                     modifier = Modifier
                         .size(48.dp)
-                        .background(Color.LightGray.copy(alpha = 0.4f), shape = RoundedCornerShape(12.dp))
+                        .background(MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(12.dp))
                 ) {
                     Icon(imageVector = Icons.Default.Remove, contentDescription = "Diminuir Página")
                 }
@@ -216,7 +215,7 @@ fun AtualizarProgressoScreen(
 
                 Surface(
                     shape = RoundedCornerShape(12.dp),
-                    color = Color.LightGray.copy(alpha = 0.3f),
+                    color = MaterialTheme.colorScheme.surfaceVariant,
                     modifier = Modifier.width(100.dp)
                 ) {
                     Box(
@@ -227,7 +226,7 @@ fun AtualizarProgressoScreen(
                             text = currentPagesInt.toString(),
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color.Black
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -243,7 +242,7 @@ fun AtualizarProgressoScreen(
                     },
                     modifier = Modifier
                         .size(48.dp)
-                        .background(Color.LightGray.copy(alpha = 0.4f), shape = RoundedCornerShape(12.dp))
+                        .background(MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(12.dp))
                 ) {
                     Icon(imageVector = Icons.Default.Add, contentDescription = "Aumentar Página")
                 }
@@ -253,7 +252,7 @@ fun AtualizarProgressoScreen(
             Text(
                 text = "de ${book.totalPages} páginas",
                 fontSize = 12.sp,
-                color = Color.Gray
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -261,7 +260,7 @@ fun AtualizarProgressoScreen(
             Text(
                 text = "Avaliação",
                 fontWeight = FontWeight.Bold,
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 14.sp,
                 modifier = Modifier.align(Alignment.Start)
             )
@@ -290,7 +289,7 @@ fun AtualizarProgressoScreen(
             Text(
                 text = "Status",
                 fontWeight = FontWeight.Bold,
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 14.sp,
                 modifier = Modifier.align(Alignment.Start)
             )
@@ -308,7 +307,7 @@ fun AtualizarProgressoScreen(
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = RedBadge,
                             selectedLabelColor = Color.White,
-                            containerColor = Color.White
+                            containerColor = MaterialTheme.colorScheme.surface
                         ),
                         modifier = Modifier.weight(1f)
                     )
