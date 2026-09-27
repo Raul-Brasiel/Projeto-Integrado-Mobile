@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SearchOff
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -33,6 +34,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -58,9 +60,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.app_01_gestao_leituras.model.Estante
 
-private val PrimaryPurple = Color(0xFF4A2B6F)
-private val BackgroundCream = Color(0xFFFBF9F1)
-private val CardBackground = Color(0xFFFFFFFF)
+// Cores de status/marca fixas — não acompanham o tema claro/escuro por serem cores semânticas.
 private val RedBadge = Color(0xFFD9534F)
 private val GreenChip = Color(0xFF1B5E20)
 private val SoftRed = Color(0xFFE57373)
@@ -70,7 +70,8 @@ private val SoftRed = Color(0xFFE57373)
 fun telaEstante(
     viewModel: ExibirEstante,
     onNavigateToAddBook: () -> Unit,
-    onNavigateToDetails: (Estante) -> Unit
+    onNavigateToDetails: (Estante) -> Unit,
+    onNavigateToSettings: () -> Unit = {}
 ) {
     val books by viewModel.books.collectAsState()
 
@@ -82,20 +83,29 @@ fun telaEstante(
     var searchQuery by remember { mutableStateOf("") }
 
     Scaffold(
-        containerColor = BackgroundCream,
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
                 title = {
                     Text(
                         text = "Estante",
-                        color = PrimaryPurple,
+                        color = MaterialTheme.colorScheme.primary,
                         fontSize = 28.sp,
                         fontWeight = FontWeight.Bold
                     )
                 },
-
-                actions = {},
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = BackgroundCream)
+                actions = {
+                    IconButton(onClick = onNavigateToSettings) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = "Configurações",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.background
+                )
             )
         },
         floatingActionButton = {
@@ -251,7 +261,7 @@ fun FilterChipItem(text: String, isSelected: Boolean, onClick: () -> Unit) {
     Surface(
         onClick = onClick,
         shape = RoundedCornerShape(16.dp),
-        color = if (isSelected) GreenChip else Color.White,
+        color = if (isSelected) GreenChip else MaterialTheme.colorScheme.surface,
         shadowElevation = 2.dp
     ) {
         Box(
@@ -260,7 +270,7 @@ fun FilterChipItem(text: String, isSelected: Boolean, onClick: () -> Unit) {
         ) {
             Text(
                 text = text,
-                color = if (isSelected) Color.White else Color.Black,
+                color = if (isSelected) Color.White else MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1
             )
@@ -283,7 +293,7 @@ fun BookCardItem(
 
     Card(
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = CardBackground),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -328,7 +338,7 @@ fun BookCardItem(
                         text = book.title,
                         fontWeight = FontWeight.Bold,
                         fontSize = 15.sp,
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.onSurface,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -336,7 +346,7 @@ fun BookCardItem(
                     Text(
                         text = book.author,
                         fontSize = 13.sp,
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -364,7 +374,7 @@ fun BookCardItem(
                         Text(
                             text = book.category,
                             fontSize = 12.sp,
-                            color = Color.Gray,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
@@ -383,7 +393,7 @@ fun BookCardItem(
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.List,
                         contentDescription = "Detalhes",
-                        tint = PrimaryPurple
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
                 Spacer(modifier = Modifier.width(4.dp))
@@ -391,7 +401,7 @@ fun BookCardItem(
                     Icon(
                         imageVector = Icons.Default.Edit,
                         contentDescription = "Editar",
-                        tint = PrimaryPurple
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
                 Spacer(modifier = Modifier.width(4.dp))
