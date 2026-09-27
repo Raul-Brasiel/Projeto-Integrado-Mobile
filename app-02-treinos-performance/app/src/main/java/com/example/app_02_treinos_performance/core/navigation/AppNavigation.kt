@@ -38,11 +38,15 @@ import com.example.app_02_treinos_performance.feature.novaFicha.NovaFichaViewMod
 import com.example.app_02_treinos_performance.feature.registrarCarga.RegistrarCargaScreen
 import com.example.app_02_treinos_performance.feature.registrarCarga.RegistrarCargaViewModel
 import com.example.app_02_treinos_performance.feature.registrarCarga.RegistrarCargaViewModelFactory
+import com.example.app_02_treinos_performance.feature.cadastroCardio.CadastroCardioScreen
+import com.example.app_02_treinos_performance.feature.cadastroCardio.CadastroCardioViewModel
+import com.example.app_02_treinos_performance.feature.cadastroCardio.CadastroCardioViewModelFactory
 
 private const val ROTA_NOVA_FICHA = "novaFicha"
 private const val ROTA_DETALHES_FICHA = "detalhesFicha"
 private const val ROTA_REGISTRAR_CARGA = "registrarCarga"
 private const val ROTA_ADICIONAR_EXERCICIO = "adicionarExercicio"
+private const val ROTA_CADASTRO_CARDIO = "cadastroCardio"
 
 @Composable
 fun AppNavigation(
@@ -105,9 +109,34 @@ fun AppNavigation(
                 ListaCardioScreen(
                     viewModel = listaCardioViewModel,
                     onAdicionarCardio = {
+                        navController.navigate(ROTA_CADASTRO_CARDIO)
                     },
                     onEditarCardio = { cardioId ->
+                        navController.navigate("$ROTA_CADASTRO_CARDIO?cardioId=$cardioId")
                     }
+                )
+            }
+
+            composable(
+                route = "$ROTA_CADASTRO_CARDIO?cardioId={cardioId}",
+                arguments = listOf(
+                    navArgument("cardioId") {
+                        type = NavType.LongType
+                        defaultValue = -1L
+                    }
+                )
+            ) { backStackEntry ->
+                val cardioIdArg = backStackEntry.arguments?.getLong("cardioId") ?: -1L
+                val cardioIdParaEditar = cardioIdArg.takeIf { it != -1L }
+
+                val cadastroCardioViewModel: CadastroCardioViewModel = viewModel(
+                    factory = CadastroCardioViewModelFactory(cardioRepository, cardioIdParaEditar)
+                )
+
+                CadastroCardioScreen(
+                    viewModel = cadastroCardioViewModel,
+                    onVoltar = { navController.popBackStack() },
+                    onSalvo = { navController.popBackStack() }
                 )
             }
 
