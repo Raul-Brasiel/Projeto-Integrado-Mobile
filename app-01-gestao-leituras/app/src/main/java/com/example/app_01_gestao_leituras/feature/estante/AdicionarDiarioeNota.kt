@@ -20,13 +20,8 @@ import androidx.compose.ui.unit.sp
 import com.example.app_01_gestao_leituras.model.Estante
 import com.example.app_01_gestao_leituras.model.ReadingLogEntity
 
-private val PrimaryPurple = Color(0xFF4A2B6F)
-private val BackgroundCream = Color(0xFFFBF9F1)
-private val CardBackground = Color(0xFFFFFFFF)
-private val SoftInputBackground = Color(0xFFF3EFE6)
 private val SoftRed = Color(0xFFE57373)
 private val GreenButton = Color(0xFF1B5E20)
-private val TabContainerColor = Color(0xFFDCD6D0)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,7 +50,7 @@ fun NovoRegistroScreen(
     }
 
     Scaffold(
-        containerColor = BackgroundCream,
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
                 title = {
@@ -64,25 +59,25 @@ fun NovoRegistroScreen(
                             onClick = onBackClick,
                             modifier = Modifier
                                 .size(40.dp)
-                                .background(TabContainerColor.copy(alpha = 0.4f), shape = CircleShape)
+                                .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f), shape = CircleShape)
                         ) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Voltar",
-                                tint = PrimaryPurple
+                                tint = MaterialTheme.colorScheme.primary
                             )
                         }
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
                             text = if (logToEdit == null) "Novo registro" else "Editar registro",
-                            color = PrimaryPurple,
+                            color = MaterialTheme.colorScheme.primary,
                             fontSize = 22.sp,
                             fontWeight = FontWeight.Bold
                         )
                     }
                 },
                 navigationIcon = {},
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = BackgroundCream)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background)
             )
         }
     ) { paddingValues ->
@@ -98,7 +93,7 @@ fun NovoRegistroScreen(
 
             Surface(
                 shape = RoundedCornerShape(24.dp),
-                color = TabContainerColor.copy(alpha = 0.6f),
+                color = MaterialTheme.colorScheme.surfaceVariant,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp)
@@ -114,7 +109,7 @@ fun NovoRegistroScreen(
                         val isSelected = selectedType == tipo
                         Surface(
                             shape = RoundedCornerShape(20.dp),
-                            color = if (isSelected) CardBackground else Color.Transparent,
+                            color = if (isSelected) MaterialTheme.colorScheme.surface else Color.Transparent,
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxHeight(),
@@ -126,7 +121,7 @@ fun NovoRegistroScreen(
                             ) {
                                 Text(
                                     text = tipo,
-                                    color = if (isSelected) PrimaryPurple else Color.DarkGray,
+                                    color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 15.sp
                                 )
@@ -141,13 +136,13 @@ fun NovoRegistroScreen(
                     text = "Livro",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.DarkGray
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
                 Box(modifier = Modifier.fillMaxWidth()) {
                     Surface(
                         shape = RoundedCornerShape(16.dp),
-                        color = CardBackground,
+                        color = MaterialTheme.colorScheme.surface,
                         shadowElevation = 1.dp,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -186,7 +181,7 @@ fun NovoRegistroScreen(
                                     text = selectedBook?.title ?: "Selecione um livro",
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 14.sp,
-                                    color = Color.Black,
+                                    color = MaterialTheme.colorScheme.onSurface,
                                     maxLines = 1
                                 )
                             }
@@ -194,7 +189,7 @@ fun NovoRegistroScreen(
                             Icon(
                                 imageVector = Icons.Default.ArrowDropDown,
                                 contentDescription = "Expandir",
-                                tint = Color.Gray
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     }
@@ -202,7 +197,7 @@ fun NovoRegistroScreen(
                     DropdownMenu(
                         expanded = expandedBookMenu,
                         onDismissRequest = { expandedBookMenu = false },
-                        modifier = Modifier.background(CardBackground)
+                        modifier = Modifier.background(MaterialTheme.colorScheme.surface)
                     ) {
                         if (books.isEmpty()) {
                             DropdownMenuItem(
@@ -230,18 +225,18 @@ fun NovoRegistroScreen(
                         text = "Página",
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.DarkGray
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
 
                     OutlinedTextField(
                         value = paginaText,
                         onValueChange = { paginaText = it },
-                        placeholder = { Text("ex: 154", color = Color.Gray) },
+                        placeholder = { Text("ex: 154", color = MaterialTheme.colorScheme.onSurfaceVariant) },
                         shape = RoundedCornerShape(16.dp),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedContainerColor = SoftInputBackground,
-                            unfocusedContainerColor = SoftInputBackground,
-                            disabledContainerColor = SoftInputBackground,
+                            focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                            disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant,
                             focusedBorderColor = Color.Transparent,
                             unfocusedBorderColor = Color.Transparent
                         ),
@@ -256,7 +251,7 @@ fun NovoRegistroScreen(
                     text = if (selectedType == "Nota") "Sua nota" else "Anotação do Diário",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.DarkGray
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
                 OutlinedTextField(
@@ -268,14 +263,14 @@ fun NovoRegistroScreen(
                                 "Escreva sua anotação, reflexão ou citação..."
                             else
                                 "Como foi sua leitura hoje?",
-                            color = Color.Gray
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     },
                     shape = RoundedCornerShape(16.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = SoftInputBackground,
-                        unfocusedContainerColor = SoftInputBackground,
-                        disabledContainerColor = SoftInputBackground,
+                        focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant,
                         focusedBorderColor = Color.Transparent,
                         unfocusedBorderColor = Color.Transparent
                     ),
@@ -288,7 +283,7 @@ fun NovoRegistroScreen(
             if (selectedType == "Nota") {
                 Surface(
                     shape = RoundedCornerShape(16.dp),
-                    color = SoftInputBackground,
+                    color = MaterialTheme.colorScheme.surfaceVariant,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Row(
@@ -302,7 +297,7 @@ fun NovoRegistroScreen(
                             Icon(
                                 imageVector = Icons.Default.Star,
                                 contentDescription = null,
-                                tint = PrimaryPurple,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(20.dp)
                             )
                             Spacer(modifier = Modifier.width(12.dp))
@@ -310,7 +305,7 @@ fun NovoRegistroScreen(
                                 text = "Marcar como citação favorita",
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Medium,
-                                color = Color.Black
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                         }
 
