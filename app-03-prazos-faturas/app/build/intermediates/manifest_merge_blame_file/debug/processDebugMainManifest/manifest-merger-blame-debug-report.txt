@@ -1,0 +1,177 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.paulo.obrigacoes"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+9        android:targetSdkVersion="34" />
+10
+11    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+11-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:4:5-76
+11-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:4:22-74
+12    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+12-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:5:5-78
+12-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:5:22-76
+13    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+13-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:6:5-80
+13-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:6:22-78
+14
+15    <permission
+15-->[androidx.core:core:1.13.1] C:\Users\samar\.gradle\caches\transforms-3\2b7048a1d79e4c62d12614ce5224d830\transformed\core-1.13.1\AndroidManifest.xml:22:5-24:47
+16        android:name="com.paulo.obrigacoes.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+16-->[androidx.core:core:1.13.1] C:\Users\samar\.gradle\caches\transforms-3\2b7048a1d79e4c62d12614ce5224d830\transformed\core-1.13.1\AndroidManifest.xml:23:9-81
+17        android:protectionLevel="signature" />
+17-->[androidx.core:core:1.13.1] C:\Users\samar\.gradle\caches\transforms-3\2b7048a1d79e4c62d12614ce5224d830\transformed\core-1.13.1\AndroidManifest.xml:24:9-44
+18
+19    <uses-permission android:name="com.paulo.obrigacoes.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+19-->[androidx.core:core:1.13.1] C:\Users\samar\.gradle\caches\transforms-3\2b7048a1d79e4c62d12614ce5224d830\transformed\core-1.13.1\AndroidManifest.xml:26:5-97
+19-->[androidx.core:core:1.13.1] C:\Users\samar\.gradle\caches\transforms-3\2b7048a1d79e4c62d12614ce5224d830\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
+20
+21    <application
+21-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:8:5-35:19
+22        android:allowBackup="true"
+22-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:9:9-35
+23        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+23-->[androidx.core:core:1.13.1] C:\Users\samar\.gradle\caches\transforms-3\2b7048a1d79e4c62d12614ce5224d830\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
+24        android:dataExtractionRules="@xml/data_extraction_rules"
+24-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:14:9-65
+25        android:debuggable="true"
+26        android:extractNativeLibs="false"
+27        android:fullBackupContent="@xml/backup_rules"
+27-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:15:9-54
+28        android:icon="@mipmap/ic_launcher"
+28-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:10:9-43
+29        android:label="@string/app_name"
+29-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:11:9-41
+30        android:roundIcon="@mipmap/ic_launcher"
+30-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:12:9-48
+31        android:supportsRtl="true"
+31-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:13:9-35
+32        android:testOnly="true"
+33        android:theme="@style/Theme.Obrigacoes" >
+33-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:16:9-48
+34        <activity
+34-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:18:9-25:20
+35            android:name="com.paulo.obrigacoes.ui.main.MainActivity"
+35-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:19:13-49
+36            android:exported="true" >
+36-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:20:13-36
+37            <intent-filter>
+37-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:21:13-24:29
+38                <action android:name="android.intent.action.MAIN" />
+38-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:22:17-69
+38-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:22:25-66
+39
+40                <category android:name="android.intent.category.LAUNCHER" />
+40-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:23:17-77
+40-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:23:27-74
+41            </intent-filter>
+42        </activity>
+43        <activity
+43-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:27:9-91
+44            android:name="com.paulo.obrigacoes.ui.cadastro.CadastroActivity"
+44-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:27:19-63
+45            android:exported="false" />
+45-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:27:64-88
+46        <activity
+46-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:28:9-91
+47            android:name="com.paulo.obrigacoes.ui.datetime.DateTimeActivity"
+47-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:28:19-63
+48            android:exported="false" />
+48-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:28:64-88
+49        <activity
+49-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:29:9-91
+50            android:name="com.paulo.obrigacoes.ui.detalhes.DetalhesActivity"
+50-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:29:19-63
+51            android:exported="false" />
+51-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:29:64-88
+52        <activity
+52-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:30:9-97
+53            android:name="com.paulo.obrigacoes.ui.notificacao.NotificacaoActivity"
+53-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:30:19-69
+54            android:exported="false" />
+54-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:30:70-94
+55        <activity
+55-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:31:9-88
+56            android:name="com.paulo.obrigacoes.ListaNotificacoesActivity"
+56-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:31:19-60
+57            android:exported="false" />
+57-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:31:61-85
+58
+59        <receiver
+59-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:33:9-96
+60            android:name="com.paulo.obrigacoes.notification.NotificationReceiver"
+60-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:33:19-68
+61            android:exported="false" />
+61-->C:\Users\samar\Projeto-Integrado-Mobile\app-03-prazos-faturas\app\src\main\AndroidManifest.xml:33:69-93
+62
+63        <provider
+63-->[androidx.emoji2:emoji2:1.2.0] C:\Users\samar\.gradle\caches\transforms-3\f82c1e86b8d7c2c4543923a9358cda78\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+64            android:name="androidx.startup.InitializationProvider"
+64-->[androidx.emoji2:emoji2:1.2.0] C:\Users\samar\.gradle\caches\transforms-3\f82c1e86b8d7c2c4543923a9358cda78\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+65            android:authorities="com.paulo.obrigacoes.androidx-startup"
+65-->[androidx.emoji2:emoji2:1.2.0] C:\Users\samar\.gradle\caches\transforms-3\f82c1e86b8d7c2c4543923a9358cda78\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+66            android:exported="false" >
+66-->[androidx.emoji2:emoji2:1.2.0] C:\Users\samar\.gradle\caches\transforms-3\f82c1e86b8d7c2c4543923a9358cda78\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+67            <meta-data
+67-->[androidx.emoji2:emoji2:1.2.0] C:\Users\samar\.gradle\caches\transforms-3\f82c1e86b8d7c2c4543923a9358cda78\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+68                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+68-->[androidx.emoji2:emoji2:1.2.0] C:\Users\samar\.gradle\caches\transforms-3\f82c1e86b8d7c2c4543923a9358cda78\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+69                android:value="androidx.startup" />
+69-->[androidx.emoji2:emoji2:1.2.0] C:\Users\samar\.gradle\caches\transforms-3\f82c1e86b8d7c2c4543923a9358cda78\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+70            <meta-data
+70-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\samar\.gradle\caches\transforms-3\efa86acad4ee31d266bbc00d16d0f12a\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
+71                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+71-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\samar\.gradle\caches\transforms-3\efa86acad4ee31d266bbc00d16d0f12a\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
+72                android:value="androidx.startup" />
+72-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\samar\.gradle\caches\transforms-3\efa86acad4ee31d266bbc00d16d0f12a\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+73            <meta-data
+73-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
+74                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+74-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
+75                android:value="androidx.startup" />
+75-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
+76        </provider>
+77
+78        <receiver
+78-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
+79            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+79-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
+80            android:directBootAware="false"
+80-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
+81            android:enabled="true"
+81-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
+82            android:exported="true"
+82-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
+83            android:permission="android.permission.DUMP" >
+83-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
+84            <intent-filter>
+84-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
+85                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+85-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
+85-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
+86            </intent-filter>
+87            <intent-filter>
+87-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
+88                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+88-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
+88-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
+89            </intent-filter>
+90            <intent-filter>
+90-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
+91                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+91-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
+91-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
+92            </intent-filter>
+93            <intent-filter>
+93-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
+94                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+94-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
+94-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\samar\.gradle\caches\transforms-3\8ccabff5b4f48e586010a8c8af604318\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
+95            </intent-filter>
+96        </receiver>
+97    </application>
+98
+99</manifest>

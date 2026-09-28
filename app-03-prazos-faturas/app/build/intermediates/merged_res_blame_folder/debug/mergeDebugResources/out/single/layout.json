@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-mergeDebugResources-37:\\layout\\activity_notificacao.xml",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\layout\\activity_notificacao.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-mergeDebugResources-37:\\layout\\item_obligation.xml",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\layout\\item_obligation.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-mergeDebugResources-37:\\layout\\activity_date_time.xml",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\layout\\activity_date_time.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-mergeDebugResources-37:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-mergeDebugResources-37:\\layout\\activity_detalhes.xml",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\layout\\activity_detalhes.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-mergeDebugResources-37:\\layout\\item_notificacao.xml",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\layout\\item_notificacao.xml"
+    },
+    {
+        "merged": "com.paulo.obrigacoes.app-mergeDebugResources-37:/layout/activity_main.xml",
+        "source": "com.paulo.obrigacoes.app-main-40:/layout/activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-mergeDebugResources-37:\\layout\\activity_lista_notificacoes.xml",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\layout\\activity_lista_notificacoes.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-mergeDebugResources-37:\\layout\\activity_cadastro.xml",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\layout\\activity_cadastro.xml"
+    }
+]

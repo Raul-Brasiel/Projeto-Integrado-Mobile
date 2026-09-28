@@ -1,0 +1,126 @@
+[
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable_bg_fab.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable\\bg_fab.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable_bg_badge_paid.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable\\bg_badge_paid.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable_bg_badge_late.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable\\bg_badge_late.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable_bg_item_pending.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable\\bg_item_pending.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\xml\\data_extraction_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\layout_activity_lista_notificacoes.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\layout\\activity_lista_notificacoes.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable_bg_item_late.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable\\bg_item_late.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable_bg_input.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable\\bg_input.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\layout_activity_detalhes.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\layout\\activity_detalhes.xml"
+    },
+    {
+        "merged": "com.paulo.obrigacoes.app-debug-38:/layout_activity_main.xml.flat",
+        "source": "com.paulo.obrigacoes.app-main-40:/layout/activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable_ic_back.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable\\ic_back.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable_bg_toggle_selected.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable\\bg_toggle_selected.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable_bg_modal.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable\\bg_modal.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\layout_activity_date_time.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\layout\\activity_date_time.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable_ic_bell.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable\\ic_bell.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\layout_activity_cadastro.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\layout\\activity_cadastro.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable_bg_card.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable\\bg_card.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable_bg_radio_selected.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable\\bg_radio_selected.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable_bg_toggle_unselected.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable\\bg_toggle_unselected.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\layout_activity_notificacao.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\layout\\activity_notificacao.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable-v24\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable_ic_close.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable\\ic_close.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\layout_item_obligation.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\layout\\item_obligation.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable_bg_item_paid.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable\\bg_item_paid.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\drawable_bg_badge_pending.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\drawable\\bg_badge_pending.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\xml\\backup_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-debug-38:\\layout_item_notificacao.xml.flat",
+        "source": "C:\\Users\\samar\\.gradle\\daemon\\8.4\\com.paulo.obrigacoes.app-main-40:\\layout\\item_notificacao.xml"
+    }
+]
