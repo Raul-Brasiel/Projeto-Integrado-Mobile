@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
 import com.example.app_02_treinos_performance.core.designSystem.components.ItemDetalheExercicioCard
+import com.example.app_02_treinos_performance.core.designSystem.components.SerieDetalhe
 import com.example.app_02_treinos_performance.data.model.ItemFichaComExercicio
 
 @Composable
@@ -83,9 +84,18 @@ private fun DetalhesFichaContent(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(uiState.itens, key = { it.id }) { item ->
+                // Cria a lista de séries detalhadas com base nas informações do item
+                val seriesDetalhes = List(item.series) {
+                    SerieDetalhe(
+                        repeticoes = item.repeticoes,
+                        carga = item.cargaKg
+                    )
+                }
+
                 ItemDetalheExercicioCard(
                     titulo = item.nomeExercicio,
-                    subtitulo = formatarSerieRepeticaoCarga(item)
+                    subtitulo = formatarSerieRepeticaoCarga(item),
+                    seriesDetalhes = seriesDetalhes
                 )
             }
         }
