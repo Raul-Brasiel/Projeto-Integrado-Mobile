@@ -85,7 +85,6 @@ private fun DetalhesFichaContent(
         ) {
             items(uiState.itens, key = { it.item.id }) { itemESeries ->
                 val item = itemESeries.item
-                // Cria a lista de séries detalhadas com base nas informações do item
                 val seriesDetalhes = if (itemESeries.series.isNotEmpty()) {
                     itemESeries.series.sortedBy { it.numero }.map { serie ->
                         SerieDetalhe(

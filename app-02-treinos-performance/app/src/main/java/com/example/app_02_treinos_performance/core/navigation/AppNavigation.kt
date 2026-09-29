@@ -27,6 +27,9 @@ import com.example.app_02_treinos_performance.data.repository.CardioRepository
 import com.example.app_02_treinos_performance.data.repository.ExercicioRepository
 import com.example.app_02_treinos_performance.data.repository.ItemFichaRepository
 import com.example.app_02_treinos_performance.data.repository.SerieRepository
+import com.example.app_02_treinos_performance.feature.adicionarExercicios.AdicionarExercicioScreen
+import com.example.app_02_treinos_performance.feature.adicionarExercicios.AdicionarExercicioViewModel
+import com.example.app_02_treinos_performance.feature.adicionarExercicios.AdicionarExercicioViewModelFactory
 import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaScreen
 import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaViewModel
 import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaViewModelFactory
@@ -226,12 +229,15 @@ fun AppNavigation(
                 val idsString = backStackEntry.arguments?.getString("ids") ?: ""
                 val idsAdicionados = idsString.split(",").mapNotNull { it.toLongOrNull() }
 
-                val viewModel: com.example.app_02_treinos_performance.feature.adicionarExercicios.AdicionarExercicioViewModel =
-                    androidx.lifecycle.viewmodel.compose.viewModel(
-                        factory = com.example.app_02_treinos_performance.feature.adicionarExercicios.AdicionarExercicioViewModelFactory(exercicioRepository, idsAdicionados)
+                val viewModel: AdicionarExercicioViewModel =
+                    viewModel(
+                        factory = AdicionarExercicioViewModelFactory(
+                            exercicioRepository,
+                            idsAdicionados
+                        )
                     )
 
-                com.example.app_02_treinos_performance.feature.adicionarExercicios.AdicionarExercicioScreen(
+                AdicionarExercicioScreen(
                     viewModel = viewModel,
                     onVoltar = { itensAdicionados ->
                         navController.previousBackStackEntry?.savedStateHandle?.set(

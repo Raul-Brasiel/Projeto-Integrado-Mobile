@@ -7,6 +7,7 @@ import com.example.app_02_treinos_performance.data.model.Ficha
 import com.example.app_02_treinos_performance.data.model.FichaResumo
 import com.example.app_02_treinos_performance.data.model.ItemFicha
 import com.example.app_02_treinos_performance.data.model.ItemFichaComExercicio
+import com.example.app_02_treinos_performance.data.model.ItemFichaComExercicioESeries
 import com.example.app_02_treinos_performance.data.model.ItemFichaRascunho
 import kotlinx.coroutines.flow.Flow
 
@@ -17,7 +18,7 @@ class FichaRepository(private val database: AppDatabase) {
     fun listarResumo(): Flow<List<FichaResumo>> = fichaDao.listarResumo()
     suspend fun buscarFichaPorId(fichaId: Long): Ficha? = fichaDao.buscarPorId(fichaId)
     fun listarItensDaFicha(fichaId: Long): Flow<List<ItemFichaComExercicio>> = database.itemFichaDao().listarItensDaFicha(fichaId)
-    fun listarItensESeriesDaFicha(fichaId: Long): Flow<List<com.example.app_02_treinos_performance.data.model.ItemFichaComExercicioESeries>> = database.itemFichaDao().listarItensESeriesDaFicha(fichaId)
+    fun listarItensESeriesDaFicha(fichaId: Long): Flow<List<ItemFichaComExercicioESeries>> = database.itemFichaDao().listarItensESeriesDaFicha(fichaId)
     suspend fun deletar(ficha: Ficha) = fichaDao.deletar(ficha)
 
     suspend fun salvarFichaComExercicios(nome: String, itens: List<ItemFichaRascunho>): Long {
