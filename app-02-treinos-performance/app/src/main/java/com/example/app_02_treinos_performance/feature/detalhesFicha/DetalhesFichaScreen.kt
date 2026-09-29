@@ -83,13 +83,22 @@ private fun DetalhesFichaContent(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(uiState.itens, key = { it.id }) { item ->
-                // Cria a lista de séries detalhadas com base nas informações do item
-                val seriesDetalhes = List(item.series) {
-                    SerieDetalhe(
-                        repeticoes = item.repeticoes,
-                        carga = item.cargaKg
-                    )
+            items(uiState.itens, key = { it.item.id }) { itemESeries ->
+                val item = itemESeries.item
+                val seriesDetalhes = if (itemESeries.series.isNotEmpty()) {
+                    itemESeries.series.sortedBy { it.numero }.map { serie ->
+                        SerieDetalhe(
+                            repeticoes = serie.repeticoes,
+                            carga = serie.pesoKg
+                        )
+                    }
+                } else {
+                    List(item.series) {
+                        SerieDetalhe(
+                            repeticoes = item.repeticoes,
+                            carga = item.cargaKg
+                        )
+                    }
                 }
 
                 ItemDetalheExercicioCard(

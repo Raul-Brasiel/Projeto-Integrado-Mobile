@@ -20,7 +20,7 @@ class DetalhesFichaViewModel(
             val ficha = fichaRepository.buscarFichaPorId(fichaId)
             _uiState.update { it.copy(nomeFicha = ficha?.nome ?: "") }
 
-            fichaRepository.listarItensDaFicha(fichaId).collect { itens ->
+            fichaRepository.listarItensESeriesDaFicha(fichaId).collect { itens ->
                 _uiState.update { it.copy(itens = itens, carregando = false) }
             }
         }

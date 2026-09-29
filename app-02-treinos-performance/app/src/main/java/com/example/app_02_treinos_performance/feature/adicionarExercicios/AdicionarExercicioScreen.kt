@@ -1,5 +1,6 @@
 package com.example.app_02_treinos_performance.feature.adicionarExercicios
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,62 +30,78 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.app_02_treinos_performance.data.model.Exercicio
 import com.example.app_02_treinos_performance.data.model.GruposMusculares
+import com.example.app_02_treinos_performance.data.model.ItemFichaRascunho
 
 @Composable
 fun AdicionarExercicioScreen(
     viewModel: AdicionarExercicioViewModel,
-    onVoltar: (itensAdicionados: List<com.example.app_02_treinos_performance.data.model.ItemFichaRascunho>) -> Unit
+    onVoltar: (itensAdicionados: List<ItemFichaRascunho>) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    AdicionarExercicioContent(
-        uiState = uiState,
-        onVoltar = { onVoltar(uiState.itensAdicionados) },
-        onBuscaAlterada = viewModel::onBuscaAlterada,
-        onFiltroClicado = viewModel::onFiltroClicado,
-        onExercicioClicado = viewModel::onExercicioClicado,
-        onAbrirFormularioNovoExercicio = viewModel::abrirFormularioNovoExercicio,
-        onFecharFormularioNovoExercicio = viewModel::fecharFormularioNovoExercicio,
-        onNomeNovoExercicioAlterado = viewModel::onNomeNovoExercicioAlterado,
-        onTipoNovoExercicioSelecionado = viewModel::onTipoNovoExercicioSelecionado,
-        onConfirmarNovoExercicio = viewModel::confirmarNovoExercicio
-    )
-}
+        val snackbarHostState = remember { SnackbarHostState() }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun AdicionarExercicioContent(
-    uiState: AdicionarExercicioUiState,
-    onVoltar: () -> Unit,
-    onBuscaAlterada: (String) -> Unit,
-    onFiltroClicado: (String) -> Unit,
-    onExercicioClicado: (Exercicio) -> Unit,
-    onAbrirFormularioNovoExercicio: () -> Unit,
-    onFecharFormularioNovoExercicio: () -> Unit,
-    onNomeNovoExercicioAlterado: (String) -> Unit,
-    onTipoNovoExercicioSelecionado: (String) -> Unit,
-    onConfirmarNovoExercicio: () -> Unit
-) {
-    val listaFiltrada = uiState.catalogo.filter { exercicio ->
-        val bateBusca = exercicio.nome.contains(uiState.textoBusca, ignoreCase = true)
-        val bateFiltro = uiState.filtroSelecionado == null || exercicio.grupoMuscular == uiState.filtroSelecionado
-        bateBusca && bateFiltro
+        LaunchedEffect(uiState.mensagemAlerta) {
+            uiState.mensagemAlerta?.let { msg ->
+                snackbarHostState.showSnackbar(msg)
+                viewModel.limparMensagemAlerta()
+            }
+        }
+
+        AdicionarExercicioContent(
+            uiState = uiState,
+            snackbarHostState = snackbarHostState,
+            onVoltar = { onVoltar(uiState.itensAdicionados) },
+            onBuscaAlterada = viewModel::onBuscaAlterada,
+            onFiltroClicado = viewModel::onFiltroClicado,
+            onExercicioClicado = viewModel::onExercicioClicado,
+            onAbrirFormularioNovoExercicio = viewModel::abrirFormularioNovoExercicio,
+            onFecharFormularioNovoExercicio = viewModel::fecharFormularioNovoExercicio,
+            onNomeNovoExercicioAlterado = viewModel::onNomeNovoExercicioAlterado,
+            onTipoNovoExercicioSelecionado = viewModel::onTipoNovoExercicioSelecionado,
+            onConfirmarNovoExercicio = viewModel::confirmarNovoExercicio
+        )
     }
 
-    Scaffold(
-        topBar = {
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    private fun AdicionarExercicioContent(
+        uiState: AdicionarExercicioUiState,
+        snackbarHostState: SnackbarHostState,
+        onVoltar: () -> Unit,
+        onBuscaAlterada: (String) -> Unit,
+        onFiltroClicado: (String) -> Unit,
+        onExercicioClicado: (Exercicio) -> Unit,
+        onAbrirFormularioNovoExercicio: () -> Unit,
+        onFecharFormularioNovoExercicio: () -> Unit,
+        onNomeNovoExercicioAlterado: (String) -> Unit,
+        onTipoNovoExercicioSelecionado: (String) -> Unit,
+        onConfirmarNovoExercicio: () -> Unit
+    ) {
+        val listaFiltrada = uiState.catalogo.filter { exercicio ->
+            val bateBusca = exercicio.nome.contains(uiState.textoBusca, ignoreCase = true)
+            val bateFiltro = uiState.filtroSelecionado == null || exercicio.grupoMuscular == uiState.filtroSelecionado
+            bateBusca && bateFiltro
+        }
+
+        Scaffold(
+            snackbarHost = { androidx.compose.material3.SnackbarHost(snackbarHostState) },
+            topBar = {
             TopAppBar(
                 title = { Text("Adicionar exercícios", fontWeight = FontWeight.Bold) },
                 navigationIcon = {
@@ -144,7 +161,7 @@ private fun AdicionarExercicioContent(
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
                             colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface),
-                            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                         ) {
                             Text(
                                 text = exercicio.nome,
@@ -163,7 +180,7 @@ private fun AdicionarExercicioContent(
                             .height(48.dp)
                             .padding(top = 8.dp),
                         shape = RoundedCornerShape(12.dp),
-                        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.secondary)
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.secondary)
                     ) {
                         Icon(Icons.Default.Add, contentDescription = null, tint = MaterialTheme.colorScheme.secondary)
                         Text(

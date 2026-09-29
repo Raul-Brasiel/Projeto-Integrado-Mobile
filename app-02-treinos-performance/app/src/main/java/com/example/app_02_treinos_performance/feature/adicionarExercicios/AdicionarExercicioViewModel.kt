@@ -11,7 +11,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class AdicionarExercicioViewModel(
-    private val exercicioRepository: ExercicioRepository
+    private val exercicioRepository: ExercicioRepository,
+    private val idsAdicionadosIniciais: List<Long>
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AdicionarExercicioUiState())
@@ -20,7 +21,10 @@ class AdicionarExercicioViewModel(
     init {
         viewModelScope.launch {
             exercicioRepository.listarCatalogo().collect { lista ->
-                _uiState.update { it.copy(catalogo = lista) }
+                val idsAdicionadosAgora = _uiState.value.itensAdicionados.map { it.exercicioId }
+                val idsFiltrados = idsAdicionadosIniciais + idsAdicionadosAgora
+                val catalogoFiltrado = lista.filter { it.id !in idsFiltrados }
+                _uiState.update { it.copy(catalogo = catalogoFiltrado) }
             }
         }
     }
@@ -39,11 +43,22 @@ class AdicionarExercicioViewModel(
         val novoItem = ItemFichaRascunho(
             exercicioId = exercicio.id,
             nomeExercicio = exercicio.nome,
-            series = 3,
-            repeticoes = 10,
+            series = 0,
+            repeticoes = 0,
             cargaKg = 0f
         )
-        _uiState.update { it.copy(itensAdicionados = it.itensAdicionados + novoItem) }
+        _uiState.update { estado ->
+            val novoCatalogo = estado.catalogo.filter { it.id != exercicio.id }
+            estado.copy(
+                itensAdicionados = estado.itensAdicionados + novoItem,
+                catalogo = novoCatalogo,
+                mensagemAlerta = "${exercicio.nome} adicionado à ficha!"
+            )
+        }
+    }
+
+    fun limparMensagemAlerta() {
+        _uiState.update { it.copy(mensagemAlerta = null) }
     }
 
     fun abrirFormularioNovoExercicio() {

@@ -10,5 +10,6 @@ data class AdicionarExercicioUiState(
     val itensAdicionados: List<ItemFichaRascunho> = emptyList(),
     val mostrarFormularioNovoExercicio: Boolean = false,
     val nomeNovoExercicio: String = "",
-    val tipoNovoExercicio: String? = null
+    val tipoNovoExercicio: String? = null,
+    val mensagemAlerta: String? = null
 )

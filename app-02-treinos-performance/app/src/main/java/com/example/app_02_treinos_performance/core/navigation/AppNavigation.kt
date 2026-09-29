@@ -27,6 +27,9 @@ import com.example.app_02_treinos_performance.data.repository.CardioRepository
 import com.example.app_02_treinos_performance.data.repository.ExercicioRepository
 import com.example.app_02_treinos_performance.data.repository.ItemFichaRepository
 import com.example.app_02_treinos_performance.data.repository.SerieRepository
+import com.example.app_02_treinos_performance.feature.adicionarExercicios.AdicionarExercicioScreen
+import com.example.app_02_treinos_performance.feature.adicionarExercicios.AdicionarExercicioViewModel
+import com.example.app_02_treinos_performance.feature.adicionarExercicios.AdicionarExercicioViewModelFactory
 import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaScreen
 import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaViewModel
 import com.example.app_02_treinos_performance.feature.detalhesFicha.DetalhesFichaViewModelFactory
@@ -171,7 +174,10 @@ fun AppNavigation(
                     viewModel = novaFichaViewModel,
                     onVoltar = { navController.popBackStack() },
                     onFichaSalva = { navController.popBackStack() },
-                    onAdicionarExercicio = { navController.navigate(ROTA_ADICIONAR_EXERCICIO) },
+                    onAdicionarExercicio = {
+                        val ids = novaFichaViewModel.uiState.value.itens.map { it.exercicioId }.joinToString(",")
+                        navController.navigate("$ROTA_ADICIONAR_EXERCICIO?ids=$ids")
+                    },
                     onEditarExercicio = { _, item ->
                         item.itemFichaId?.let { itemFichaId ->
                             navController.navigate("$ROTA_REGISTRAR_CARGA/$itemFichaId")
@@ -216,13 +222,22 @@ fun AppNavigation(
                 )
             }
 
-            composable(ROTA_ADICIONAR_EXERCICIO) {
-                val viewModel: com.example.app_02_treinos_performance.feature.adicionarExercicios.AdicionarExercicioViewModel =
-                    androidx.lifecycle.viewmodel.compose.viewModel(
-                        factory = com.example.app_02_treinos_performance.feature.adicionarExercicios.AdicionarExercicioViewModelFactory(exercicioRepository)
+            composable(
+                route = "$ROTA_ADICIONAR_EXERCICIO?ids={ids}",
+                arguments = listOf(navArgument("ids") { type = NavType.StringType; defaultValue = "" })
+            ) { backStackEntry ->
+                val idsString = backStackEntry.arguments?.getString("ids") ?: ""
+                val idsAdicionados = idsString.split(",").mapNotNull { it.toLongOrNull() }
+
+                val viewModel: AdicionarExercicioViewModel =
+                    viewModel(
+                        factory = AdicionarExercicioViewModelFactory(
+                            exercicioRepository,
+                            idsAdicionados
+                        )
                     )
 
-                com.example.app_02_treinos_performance.feature.adicionarExercicios.AdicionarExercicioScreen(
+                AdicionarExercicioScreen(
                     viewModel = viewModel,
                     onVoltar = { itensAdicionados ->
                         navController.previousBackStackEntry?.savedStateHandle?.set(

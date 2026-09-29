@@ -52,14 +52,6 @@ class NovaFichaViewModel(
         _uiState.update { it.copy(itens = it.itens + item) }
     }
 
-    fun atualizarItem(indice: Int, item: ItemFichaRascunho) {
-        _uiState.update { estadoAtual ->
-            val novaLista = estadoAtual.itens.toMutableList()
-            if (indice in novaLista.indices) novaLista[indice] = item
-            estadoAtual.copy(itens = novaLista)
-        }
-    }
-
     fun removerItem(indice: Int) {
         _uiState.update { estadoAtual ->
             val novaLista = estadoAtual.itens.toMutableList()
