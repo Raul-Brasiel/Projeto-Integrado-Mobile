@@ -49,42 +49,54 @@ fun AdicionarExercicioScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    AdicionarExercicioContent(
-        uiState = uiState,
-        onVoltar = { onVoltar(uiState.itensAdicionados) },
-        onBuscaAlterada = viewModel::onBuscaAlterada,
-        onFiltroClicado = viewModel::onFiltroClicado,
-        onExercicioClicado = viewModel::onExercicioClicado,
-        onAbrirFormularioNovoExercicio = viewModel::abrirFormularioNovoExercicio,
-        onFecharFormularioNovoExercicio = viewModel::fecharFormularioNovoExercicio,
-        onNomeNovoExercicioAlterado = viewModel::onNomeNovoExercicioAlterado,
-        onTipoNovoExercicioSelecionado = viewModel::onTipoNovoExercicioSelecionado,
-        onConfirmarNovoExercicio = viewModel::confirmarNovoExercicio
-    )
-}
+        val snackbarHostState = androidx.compose.runtime.remember { androidx.compose.material3.SnackbarHostState() }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun AdicionarExercicioContent(
-    uiState: AdicionarExercicioUiState,
-    onVoltar: () -> Unit,
-    onBuscaAlterada: (String) -> Unit,
-    onFiltroClicado: (String) -> Unit,
-    onExercicioClicado: (Exercicio) -> Unit,
-    onAbrirFormularioNovoExercicio: () -> Unit,
-    onFecharFormularioNovoExercicio: () -> Unit,
-    onNomeNovoExercicioAlterado: (String) -> Unit,
-    onTipoNovoExercicioSelecionado: (String) -> Unit,
-    onConfirmarNovoExercicio: () -> Unit
-) {
-    val listaFiltrada = uiState.catalogo.filter { exercicio ->
-        val bateBusca = exercicio.nome.contains(uiState.textoBusca, ignoreCase = true)
-        val bateFiltro = uiState.filtroSelecionado == null || exercicio.grupoMuscular == uiState.filtroSelecionado
-        bateBusca && bateFiltro
+        androidx.compose.runtime.LaunchedEffect(uiState.mensagemAlerta) {
+            uiState.mensagemAlerta?.let { msg ->
+                snackbarHostState.showSnackbar(msg)
+                viewModel.limparMensagemAlerta()
+            }
+        }
+
+        AdicionarExercicioContent(
+            uiState = uiState,
+            snackbarHostState = snackbarHostState,
+            onVoltar = { onVoltar(uiState.itensAdicionados) },
+            onBuscaAlterada = viewModel::onBuscaAlterada,
+            onFiltroClicado = viewModel::onFiltroClicado,
+            onExercicioClicado = viewModel::onExercicioClicado,
+            onAbrirFormularioNovoExercicio = viewModel::abrirFormularioNovoExercicio,
+            onFecharFormularioNovoExercicio = viewModel::fecharFormularioNovoExercicio,
+            onNomeNovoExercicioAlterado = viewModel::onNomeNovoExercicioAlterado,
+            onTipoNovoExercicioSelecionado = viewModel::onTipoNovoExercicioSelecionado,
+            onConfirmarNovoExercicio = viewModel::confirmarNovoExercicio
+        )
     }
 
-    Scaffold(
-        topBar = {
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    private fun AdicionarExercicioContent(
+        uiState: AdicionarExercicioUiState,
+        snackbarHostState: androidx.compose.material3.SnackbarHostState,
+        onVoltar: () -> Unit,
+        onBuscaAlterada: (String) -> Unit,
+        onFiltroClicado: (String) -> Unit,
+        onExercicioClicado: (Exercicio) -> Unit,
+        onAbrirFormularioNovoExercicio: () -> Unit,
+        onFecharFormularioNovoExercicio: () -> Unit,
+        onNomeNovoExercicioAlterado: (String) -> Unit,
+        onTipoNovoExercicioSelecionado: (String) -> Unit,
+        onConfirmarNovoExercicio: () -> Unit
+    ) {
+        val listaFiltrada = uiState.catalogo.filter { exercicio ->
+            val bateBusca = exercicio.nome.contains(uiState.textoBusca, ignoreCase = true)
+            val bateFiltro = uiState.filtroSelecionado == null || exercicio.grupoMuscular == uiState.filtroSelecionado
+            bateBusca && bateFiltro
+        }
+
+        Scaffold(
+            snackbarHost = { androidx.compose.material3.SnackbarHost(snackbarHostState) },
+            topBar = {
             TopAppBar(
                 title = { Text("Adicionar exercícios", fontWeight = FontWeight.Bold) },
                 navigationIcon = {

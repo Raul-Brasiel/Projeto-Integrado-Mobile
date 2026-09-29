@@ -196,20 +196,6 @@ private fun CadastroCardioContent(
                     ) {
                         Text("Salvar", fontWeight = FontWeight.Bold)
                     }
-
-                    if (uiState.emEdicao) {
-                        OutlinedButton(
-                            onClick = onExcluir,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(48.dp)
-                                .padding(bottom = 24.dp),
-                            shape = RoundedCornerShape(12.dp),
-                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.error)
-                        ) {
-                            Text("Excluir cárdio", color = MaterialTheme.colorScheme.error)
-                        }
-                    }
                 }
             }
         }

@@ -17,6 +17,7 @@ class FichaRepository(private val database: AppDatabase) {
     fun listarResumo(): Flow<List<FichaResumo>> = fichaDao.listarResumo()
     suspend fun buscarFichaPorId(fichaId: Long): Ficha? = fichaDao.buscarPorId(fichaId)
     fun listarItensDaFicha(fichaId: Long): Flow<List<ItemFichaComExercicio>> = database.itemFichaDao().listarItensDaFicha(fichaId)
+    fun listarItensESeriesDaFicha(fichaId: Long): Flow<List<com.example.app_02_treinos_performance.data.model.ItemFichaComExercicioESeries>> = database.itemFichaDao().listarItensESeriesDaFicha(fichaId)
     suspend fun deletar(ficha: Ficha) = fichaDao.deletar(ficha)
 
     suspend fun salvarFichaComExercicios(nome: String, itens: List<ItemFichaRascunho>): Long {
@@ -32,8 +33,34 @@ class FichaRepository(private val database: AppDatabase) {
             val fichaAtual = fichaDao.buscarPorId(fichaId) ?: return@withTransaction
             fichaDao.atualizar(fichaAtual.copy(nome = nome))
 
-            database.itemFichaDao().removerItensDaFicha(fichaId)
-            inserirItens(fichaId, itens)
+            val itemFichaDao = database.itemFichaDao()
+            val itensAntigos = itemFichaDao.buscarItensPorFichaSync(fichaId)
+            
+            val itensIdsParaManter = itens.mapNotNull { it.itemFichaId }.toSet()
+            
+            itensAntigos.filter { it.id !in itensIdsParaManter }.forEach { itemAntigo ->
+                itemFichaDao.removerItem(itemAntigo)
+            }
+            
+            itens.forEachIndexed { indice, rascunho ->
+                if (rascunho.itemFichaId != null) {
+                    val itemAntigo = itensAntigos.find { it.id == rascunho.itemFichaId }
+                    if (itemAntigo != null) {
+                        itemFichaDao.atualizarItem(itemAntigo.copy(ordem = indice))
+                    }
+                } else {
+                    itemFichaDao.adicionarExercicioNaFicha(
+                        ItemFicha(
+                            fichaId = fichaId,
+                            exercicioId = rascunho.exercicioId,
+                            series = rascunho.series,
+                            repeticoes = rascunho.repeticoes,
+                            cargaKg = rascunho.cargaKg,
+                            ordem = indice
+                        )
+                    )
+                }
+            }
         }
     }
 
