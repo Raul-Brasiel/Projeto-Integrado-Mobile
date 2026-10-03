@@ -1,4 +1,5 @@
 package com.example.app_01_gestao_leituras
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,7 +14,6 @@ import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.app_01_gestao_leituras.data.local.AppDatabase
@@ -35,6 +35,7 @@ import com.example.app_01_gestao_leituras.ui.theme.App01gestaoleiturasTheme
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+
 class MainActivity : ComponentActivity() {
 
     private val shelfViewModel: ExibirEstante by viewModels {
@@ -70,6 +71,11 @@ class MainActivity : ComponentActivity() {
                     var currentScreen by remember { mutableStateOf("shelf") }
                     var selectedBook by remember { mutableStateOf<Estante?>(null) }
                     var selectedLogToEdit by remember { mutableStateOf<ReadingLogEntity?>(null) }
+
+                    // Estados de persistência dos filtros
+                    var currentGenres by remember { mutableStateOf(listOf("Ficção", "Fantasia")) }
+                    var currentStatus by remember { mutableStateOf("Lendo") }
+                    var currentSortBy by remember { mutableStateOf("Título (A-Z)") }
 
                     val booksWithLogs by shelfViewModel.booksWithLogs.collectAsState(initial = emptyList())
 
@@ -167,12 +173,21 @@ class MainActivity : ComponentActivity() {
                                 }
                                 "filtros" -> {
                                     FiltrosScreen(
+                                        initialSelectedGenres = currentGenres,
+                                        initialStatus = currentStatus,
+                                        initialSortBy = currentSortBy,
                                         onCloseClick = { currentScreen = "shelf" },
                                         onApplyFilters = { selectedGenres, selectedStatus, sortBy ->
+                                            currentGenres = selectedGenres
+                                            currentStatus = selectedStatus
+                                            currentSortBy = sortBy
                                             shelfViewModel.applyFilters(selectedGenres, selectedStatus, sortBy)
                                             currentScreen = "shelf"
                                         },
                                         onClearFilters = {
+                                            currentGenres = emptyList()
+                                            currentStatus = "Lendo"
+                                            currentSortBy = "Título (A-Z)"
                                             shelfViewModel.clearFilters()
                                             currentScreen = "shelf"
                                         }
