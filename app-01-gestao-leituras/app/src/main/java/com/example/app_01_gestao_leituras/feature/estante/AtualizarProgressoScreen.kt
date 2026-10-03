@@ -1,5 +1,7 @@
 package com.example.app_01_gestao_leituras.feature.estante
+
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +16,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -40,14 +44,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.app_01_gestao_leituras.model.Estante
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 private val GreenChip = Color(0xFF1B5E20)
 private val RedBadge = Color(0xFFD9534F)
@@ -72,8 +84,42 @@ fun AtualizarProgressoScreen(
 
     val statuses = listOf("Quero ler", "Lendo", "Lido")
 
+    // Atualiza a página e mantém o status coerente com o progresso
+    fun definirPagina(novaPagina: Int) {
+        currentPage = novaPagina.toString()
+        if (book.totalPages > 0 && novaPagina >= book.totalPages) {
+            selectedStatus = "Lido"
+        } else if (selectedStatus == "Lido") {
+            selectedStatus = "Lendo"
+        }
+    }
+
     val initials = remember(book.title) {
         book.title.split(" ").take(2).mapNotNull { it.firstOrNull()?.uppercase() }.joinToString("")
+    }
+
+    @Composable
+    fun rememberRepeatingClick(onClick: () -> Unit): Modifier {
+        val acaoAtual by rememberUpdatedState(onClick)
+        return Modifier.pointerInput(Unit) {
+            detectTapGestures(
+                onPress = {
+                    acaoAtual()
+                    coroutineScope {
+                        val repeticao = launch {
+                            delay(300)
+                            while (true) {
+                                acaoAtual()
+                                delay(100)
+                            }
+                        }
+                        // Suspende até o usuário soltar (ou o gesto ser cancelado)
+                        tryAwaitRelease()
+                        repeticao.cancel()
+                    }
+                }
+            )
+        }
     }
 
     Scaffold(
@@ -197,16 +243,19 @@ fun AtualizarProgressoScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                IconButton(
-                    onClick = {
-                        val current = currentPage.toIntOrNull() ?: 0
-                        if (current > 0) {
-                            currentPage = (current - 1).toString()
-                        }
-                    },
+                val decreaseModifier = rememberRepeatingClick {
+                    val current = currentPage.toIntOrNull() ?: 0
+                    if (current > 0) {
+                        definirPagina(current - 1)
+                    }
+                }
+
+                Box(
                     modifier = Modifier
                         .size(48.dp)
                         .background(MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(12.dp))
+                        .then(decreaseModifier),
+                    contentAlignment = Alignment.Center
                 ) {
                     Icon(imageVector = Icons.Default.Remove, contentDescription = "Diminuir Página")
                 }
@@ -216,33 +265,54 @@ fun AtualizarProgressoScreen(
                 Surface(
                     shape = RoundedCornerShape(12.dp),
                     color = MaterialTheme.colorScheme.surfaceVariant,
-                    modifier = Modifier.width(100.dp)
+                    modifier = Modifier.width(110.dp)
                 ) {
                     Box(
-                        modifier = Modifier.padding(vertical = 12.dp),
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(
-                            text = currentPagesInt.toString(),
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        BasicTextField(
+                            value = currentPage,
+                            onValueChange = { newValue ->
+                                if (newValue.all { it.isDigit() }) {
+                                    if (newValue.isEmpty()) {
+                                        currentPage = ""
+                                    } else {
+                                        val intVal = newValue.toIntOrNull() ?: 0
+                                        if (intVal <= book.totalPages) {
+                                            definirPagina(intVal)
+                                        }
+                                    }
+                                }
+                            },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            textStyle = TextStyle(
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                textAlign = TextAlign.Center
+                            ),
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
                 }
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                IconButton(
-                    onClick = {
-                        val current = currentPage.toIntOrNull() ?: 0
-                        if (current < book.totalPages) {
-                            currentPage = (current + 1).toString()
-                        }
-                    },
+                val increaseModifier = rememberRepeatingClick {
+                    val current = currentPage.toIntOrNull() ?: 0
+                    if (current < book.totalPages) {
+                        definirPagina(current + 1)
+                    }
+                }
+
+                Box(
                     modifier = Modifier
                         .size(48.dp)
                         .background(MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(12.dp))
+                        .then(increaseModifier),
+                    contentAlignment = Alignment.Center
                 ) {
                     Icon(imageVector = Icons.Default.Add, contentDescription = "Aumentar Página")
                 }
@@ -302,7 +372,12 @@ fun AtualizarProgressoScreen(
                     val isSelected = selectedStatus == status
                     FilterChip(
                         selected = isSelected,
-                        onClick = { selectedStatus = status },
+                        onClick = {
+                            selectedStatus = status
+                            if (status == "Lido") {
+                                currentPage = book.totalPages.toString()
+                            }
+                        },
                         label = { Text(status) },
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = RedBadge,

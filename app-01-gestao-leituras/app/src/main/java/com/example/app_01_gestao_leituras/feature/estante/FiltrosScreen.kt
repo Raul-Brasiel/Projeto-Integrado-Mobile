@@ -1,4 +1,3 @@
-
 package com.example.app_01_gestao_leituras.feature.estante
 
 import androidx.compose.foundation.background
@@ -19,17 +18,28 @@ private val DarkGreen = Color(0xFF1B5E20)
 
 @Composable
 fun FiltrosScreen(
+    initialSelectedGenres: List<String>,
+    initialStatus: String,
+    initialSortBy: String,
     onCloseClick: () -> Unit,
     onApplyFilters: (selectedGenres: List<String>, selectedStatus: String, sortBy: String) -> Unit,
     onClearFilters: () -> Unit
 ) {
     val genresList = listOf("Ficção", "Fantasia", "Romance", "Não Ficção", "Biografia", "Poesia", "Ficção Cientifica", "Terror")
-    val selectedGenres = remember { mutableStateMapOf<String, Boolean>().apply { genresList.forEach { this[it] = (it == "Ficção" || it == "Fantasia") } } }
 
-    var selectedStatus by remember { mutableStateOf("Lendo") }
+    // Inicializa o mapa com base nos valores passados
+    val selectedGenres = remember {
+        mutableStateMapOf<String, Boolean>().apply {
+            genresList.forEach { genre ->
+                this[genre] = initialSelectedGenres.contains(genre)
+            }
+        }
+    }
+
+    var selectedStatus by remember { mutableStateOf(initialStatus) }
     val statusList = listOf("Quero ler", "Lido", "Lendo")
 
-    var sortBy by remember { mutableStateOf("Título (A-Z)") }
+    var sortBy by remember { mutableStateOf(initialSortBy) }
     val sortOptions = listOf("Título (A-Z)", "Autor(A-Z)", "Progresso de Leitura")
 
     Surface(
@@ -66,7 +76,6 @@ fun FiltrosScreen(
             }
 
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-
                 val rows = genresList.chunked(3)
                 rows.forEach { rowItems ->
                     Row(
