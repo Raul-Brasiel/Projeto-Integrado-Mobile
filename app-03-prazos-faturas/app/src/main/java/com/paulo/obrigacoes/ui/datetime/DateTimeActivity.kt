@@ -6,11 +6,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.paulo.obrigacoes.databinding.ActivityDateTimeBinding
+import java.util.Calendar
 
 class DateTimeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDateTimeBinding
     private lateinit var viewModel: DateTimeViewModel
+
+    // Guarda o dia que o usuário tocou no calendário (começa em hoje)
+    private var dataEscolhida: Long = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +24,8 @@ class DateTimeActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[DateTimeViewModel::class.java]
 
+        dataEscolhida = binding.calendarView.date
+
         configurarEventos()
         observarEstado()
     }
@@ -28,13 +34,21 @@ class DateTimeActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
         binding.timePicker.setIs24HourView(true)
 
+        binding.calendarView.setOnDateChangeListener { _, ano, mes, dia ->
+            val cal = Calendar.getInstance().apply {
+                set(ano, mes, dia, 0, 0, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+            dataEscolhida = cal.timeInMillis
+        }
+
         binding.btnCancelar.setOnClickListener {
             finish()
         }
 
         binding.btnConfirmar.setOnClickListener {
             viewModel.confirmar(
-                dataMillis = binding.calendarView.date,
+                dataMillis = dataEscolhida,
                 hora = binding.timePicker.hour,
                 minuto = binding.timePicker.minute
             )
