@@ -51,6 +51,21 @@
 
         </RadioGroup>
 
+        <EditText
+            android:id="@+id/inputDiasAntes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:inputType="number"
+            android:maxLength="3"
+            android:importantForAutofill="no"
+            android:hint="@string/hint_dias_antes"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_secondary"
+            android:textSize="13sp"
+            android:background="@drawable/bg_input"
+            android:padding="12dp"/>
+
     </LinearLayout>
 
     <TextView android:id="@+id/btnAtivar"

@@ -14,5 +14,6 @@ data class Obligation(
     var vencimentoMillis: Long,
     var status: Status,
     var notificacaoAtiva: Boolean = false,
-    var notificacaoLabel: String = ""
+    var notificacaoLabel: String = "",
+    var notificacaoDiasAntes: Int = 1
 ) : Serializable

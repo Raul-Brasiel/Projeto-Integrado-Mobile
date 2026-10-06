@@ -1,6 +1,7 @@
 package com.paulo.obrigacoes.ui.notificacao
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -30,33 +31,50 @@ class NotificacaoActivity : AppCompatActivity() {
                 when (obligation.notificacaoLabel) {
                     getString(R.string.opcao_no_dia) -> binding.radioGroupOpcoes.check(R.id.opcaoNoDia)
                     getString(R.string.opcao_3_dias_antes) -> binding.radioGroupOpcoes.check(R.id.opcao3Dias)
-                    getString(R.string.opcao_personalizado) -> binding.radioGroupOpcoes.check(R.id.opcaoPersonalizado)
+                    getString(R.string.opcao_personalizado) -> {
+                        binding.radioGroupOpcoes.check(R.id.opcaoPersonalizado)
+                        binding.inputDiasAntes.setText(obligation.notificacaoDiasAntes.toString())
+                    }
                     else -> binding.radioGroupOpcoes.check(R.id.opcao1Dia)
                 }
             }
         }
 
+        atualizarCampoPersonalizado()
         configurarEventos()
+    }
+
+    private fun atualizarCampoPersonalizado() {
+        val personalizado =
+            binding.radioGroupOpcoes.checkedRadioButtonId == R.id.opcaoPersonalizado
+        binding.inputDiasAntes.visibility = if (personalizado) View.VISIBLE else View.GONE
     }
 
     private fun configurarEventos() {
         binding.toolbar.setNavigationOnClickListener { finish() }
 
+        binding.radioGroupOpcoes.setOnCheckedChangeListener { _, _ ->
+            atualizarCampoPersonalizado()
+        }
+
         binding.btnAtivar.setOnClickListener {
-            val label = when (binding.radioGroupOpcoes.checkedRadioButtonId) {
-                R.id.opcaoNoDia -> getString(R.string.opcao_no_dia)
-                R.id.opcao3Dias -> getString(R.string.opcao_3_dias_antes)
-                R.id.opcaoPersonalizado -> getString(R.string.opcao_personalizado)
-                else -> getString(R.string.opcao_1_dia_antes)
+            val (label, diasAntes) = when (binding.radioGroupOpcoes.checkedRadioButtonId) {
+                R.id.opcaoNoDia -> getString(R.string.opcao_no_dia) to 0
+                R.id.opcao3Dias -> getString(R.string.opcao_3_dias_antes) to 3
+                R.id.opcaoPersonalizado -> {
+                    val dias = binding.inputDiasAntes.text.toString().trim().toIntOrNull()
+                    if (dias == null || dias !in 1..365) {
+                        binding.inputDiasAntes.error = getString(R.string.erro_dias_antes)
+                        return@setOnClickListener
+                    }
+                    getString(R.string.opcao_personalizado) to dias
+                }
+                else -> getString(R.string.opcao_1_dia_antes) to 1
             }
 
-            viewModel.ativar(label)
+            viewModel.ativar(label, diasAntes)
 
-            NotificationScheduler.agendar(
-                this,
-                viewModel.getObligationId(),
-                label
-            )
+            NotificationScheduler.agendar(this, viewModel.getObligationId())
 
             Toast.makeText(
                 this,

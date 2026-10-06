@@ -32,13 +32,7 @@ class NotificationAdapter(
         val item = items[position]
         holder.nome.text = item.descricao
         
-        val context = holder.itemView.context
-        val diasAntes = when (item.notificacaoLabel) {
-            context.getString(R.string.opcao_no_dia) -> 0
-            context.getString(R.string.opcao_3_dias_antes) -> 3
-            else -> 1
-        }
-        val disparoMillis = item.vencimentoMillis - diasAntes * 24L * 60 * 60 * 1000
+        val disparoMillis = item.vencimentoMillis - item.notificacaoDiasAntes * 24L * 60 * 60 * 1000
         
         holder.dataHora.text = sdf.format(disparoMillis)
         holder.remover.setOnClickListener { onRemove(item) }
