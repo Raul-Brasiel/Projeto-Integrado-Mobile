@@ -11,9 +11,9 @@ class NotificacaoViewModel : ViewModel() {
         obligationId = id
     }
 
-    fun ativar(label: String) {
+    fun ativar(label: String, diasAntes: Int) {
         if (obligationId != -1L) {
-            ObligationRepository.ativarNotificacao(obligationId, label)
+            ObligationRepository.ativarNotificacao(obligationId, label, diasAntes)
         }
     }
 

@@ -5,7 +5,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import com.paulo.obrigacoes.R
 import com.paulo.obrigacoes.data.repository.ObligationRepository
 
 /**
@@ -14,17 +13,14 @@ import com.paulo.obrigacoes.data.repository.ObligationRepository
  */
 object NotificationScheduler {
 
-    fun agendar(context: Context, obligationId: Long, label: String) {
+    fun agendar(context: Context, obligationId: Long) {
         val obligation = ObligationRepository.getById(obligationId) ?: return
 
-        val diasAntes = when (label) {
-            context.getString(R.string.opcao_no_dia) -> 0
-            context.getString(R.string.opcao_3_dias_antes) -> 3
-            else -> 1
-        }
+        // Remove um alarme anterior desta obrigação (ex.: ao trocar a opção)
+        cancelar(context, obligationId)
 
         val disparoMillis =
-            obligation.vencimentoMillis - diasAntes * 24 * 60 * 60 * 1000
+            obligation.vencimentoMillis - obligation.notificacaoDiasAntes * 24L * 60 * 60 * 1000
 
         val intent = Intent(context, NotificationReceiver::class.java).apply {
             putExtra("descricao", obligation.descricao)

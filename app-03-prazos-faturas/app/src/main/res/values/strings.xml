@@ -33,6 +33,8 @@
     <string name="opcao_1_dia_antes">1 dia antes</string>
     <string name="opcao_3_dias_antes">3 dias antes</string>
     <string name="opcao_personalizado">Personalizado</string>
+    <string name="hint_dias_antes">Quantos dias antes? (1 a 365)</string>
+    <string name="erro_dias_antes">Informe um número de 1 a 365</string>
 
     <string name="selecionar_data_hora">Selecionar data e hora</string>
     <string name="canal_notificacoes">Notificações de obrigações</string>

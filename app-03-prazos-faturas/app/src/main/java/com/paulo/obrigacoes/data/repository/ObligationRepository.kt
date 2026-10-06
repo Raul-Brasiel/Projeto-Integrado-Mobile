@@ -86,10 +86,11 @@ object ObligationRepository {
         publicar()
     }
 
-    fun ativarNotificacao(id: Long, label: String) {
+    fun ativarNotificacao(id: Long, label: String, diasAntes: Int = 1) {
         getById(id)?.let {
             it.notificacaoAtiva = true
             it.notificacaoLabel = label
+            it.notificacaoDiasAntes = diasAntes
         }
         publicar()
     }
